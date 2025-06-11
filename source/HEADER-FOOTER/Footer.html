@@ -1,0 +1,116 @@
+<footer class="footer-container">
+  <div class="footer">
+    <!-- PHẦN ĐẦU -->
+    <div class="footer-top">
+      <div class="footer-cta">
+        <h2>THAM GIA LENLAB CLUB VÀ NHẬN GIẢM GIÁ 15%</h2>
+        <p>Đăng ký miễn phí và gia nhập cộng đồng ngay hôm nay!</p>
+        <form id="subscribe-form">
+          <input
+            type="email"
+            id="subscribe-email"
+            placeholder="Địa chỉ Email"
+            required
+          />
+          <button type="submit">Gửi</button>
+        </form>
+      </div>
+      <div class="footer-logo-top">LEN LAB</div>
+    </div>
+
+    <!-- NỘI DUNG CHÍNH -->
+    <div class="row">
+      <div class="col">
+        <h3>Về chúng tôi</h3>
+        <p>
+          Chúng tôi cung cấp sản phẩm len chất lượng cao, mềm mại và bền vững,
+          mang lại sự ấm áp và an toàn cho người sử dụng.
+        </p>
+        <div class="about-us">
+          <p>
+            <i class="fas fa-map-marker-alt"></i> Hàn Thuyên, khu phố 6 P, Thủ
+            Đức, Hồ Chí Minh
+          </p>
+          <p><i class="fas fa-envelope"></i> lenlab.vn@gmail.com</p>
+          <p><i class="fas fa-phone"></i> 098 1234 5678</p>
+        </div>
+      </div>
+      <div class="col">
+        <h3>Danh mục</h3>
+        <ul>
+          <li>
+            <a href="../LISTING-PAGE/listing page.html">Nguyên phụ liệu</a>
+          </li>
+          <li><a href="../LISTING-PAGE/listing page.html">Đồ trang trí</a></li>
+          <li>
+            <a href="../LISTING-PAGE/listing page.html">Thời trang len</a>
+          </li>
+          <li><a href="../LISTING-PAGE/listing page.html">Combo tự làm</a></li>
+          <li>
+            <a href="../LISTING-PAGE/listing page.html">Sách hướng dẫn</a>
+          </li>
+          <li>
+            <a href="../LISTING-PAGE/listing page.html">Thú bông len</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Chính sách</h3>
+        <ul>
+          <li><a href="../POLICY/policy.html">Chính sách mua hàng</a></li>
+        </ul>
+      </div>
+      <div class="col">
+        <h3>Theo dõi</h3>
+        <div class="social-icons">
+          <a
+            href="https://www.facebook.com/profile.php?id=61575666167762&sk=about"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <a href="https://www.instagram.com/lenlab.vn?igsh=NG5wOGQyNDZoN3No"
+            ><i class="fab fa-instagram"></i
+          ></a>
+          <a href="https://www.youtube.com/@LenLabShop"
+            ><i class="fab fa-youtube"></i
+          ></a>
+          <a href="https://www.tiktok.com/@lenlabshop"
+            ><i class="fab fa-tiktok"></i
+          ></a>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+    <p class="copyright">© 2025 LEN LAB. All rights reserved.</p>
+  </div>
+
+  <!-- toast message cho nhập email ở footer -->
+  <div
+    id="email-subscribe-message"
+    style="
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: #4caf50;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 5px;
+      z-index: 9999;
+    "
+  >
+    Đăng ký thành công!
+  </div>
+
+  <script>
+    // Xử lý gửi email đăng ký ở footer
+    $("#subscribe-form").on("submit", function (e) {
+      e.preventDefault();
+      const $emailInput = $("#subscribe-email");
+      // Hiển thị thông báo
+      $("#email-subscribe-message").fadeIn(300).delay(1500).fadeOut(300);
+      // Reset input sau khi gửi
+      $emailInput.val("");
+    });
+  </script>
+</footer>

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="update_account.css" />
+    <link rel="stylesheet" href="../HEADER-FOOTER/Footer.css" />
+    <link rel="stylesheet" href="../HEADER-FOOTER/Header.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <title>ĐƠN HÀNG ĐÃ ĐẶT</title>
+  </head>
+  <body>
+    <div class="container-fluid cart-container">
+      <div id="header-placeholder"></div>
+      <script>
+        $(function () {
+          $("#header-placeholder").load("../HEADER-FOOTER/Header.html");
+          $("#footer-placeholder").load("../HEADER-FOOTER/Footer.html");
+        });
+      </script>
+
+      <main class="app-content">
+        <div class="app-title container" style="max-width: 900px">
+          <ul class="app-breadcrumb breadcrumb side">
+            <li class="breadcrumb-item active">
+              <a
+                ><b
+                  >Thông tin chi tiết đơn hàng:
+                  <span id="order-code" class="order-code-colorg"></span></b
+              ></a>
+            </li>
+          </ul>
+          <div id="clock"></div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="tile">
+              <div class="tile-body">
+                <div class="row element-button">
+                  <div class="order-details-card">
+                    <div class="col-md-12"></div>
+                    <table
+                      class="table table-hover table-bordered custom-order-table"
+                      id="sampleTable"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Người nhận</th>
+                          <th>Số điện thoại</th>
+                          <th>Email</th>
+                          <th>Địa chỉ giao hàng</th>
+                          <th>Phương thức thanh toán</th>
+                          <th>Tình trạng</th>
+                        </tr>
+                      </thead>
+                      <tbody id="orderTableBody"></tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div id="summary-details" class="order-summary mt-3"></div>
+              <div id="order-products" class="order-products-list"></div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+    <div id="footer-placeholder"></div>
+    <script>
+      function formatPrice(price) {
+        return Number(price).toLocaleString("vi-VN") + " đ";
+      }
+
+      function getOrderIdFromUrl() {
+        const params = new URLSearchParams(window.location.search);
+        return params.get("id");
+      }
+
+      function loadOrderDetail() {
+        const orderId = getOrderIdFromUrl();
+        if (!orderId) {
+          $("#orderTableBody").html(
+            '<tr><td colspan="6">Không tìm thấy mã đơn hàng</td></tr>'
+          );
+          $("#order-code").text("");
+          $("#summary-details").html("");
+          $("#order-products").html("");
+          return;
+        }
+        $.get(
+          "Orderdetail.php",
+          { action: "get_order_detail", order_id: orderId },
+          function (response) {
+            if (response.success && response.order) {
+              // Hiển thị mã đơn hàng
+              $("#order-code").text(response.order.order_id || orderId);
+
+              // Thông tin đơn hàng
+              let order = response.order;
+              let addressContent = `
+                <p>${order.specific_address || ""}</p>
+                <p>Quận/Huyện: ${order.district || ""}</p>
+                <p>Tỉnh/Thành phố: ${order.province || ""}</p>
+              `;
+              let html = `
+                <tr>
+                  <td>${order.full_name || ""}</td>
+                  <td>${order.phone || ""}</td>
+                  <td>${order.email || ""}</td>
+                  <td>${addressContent || ""}</td>
+                  <td>${order.payment_method || ""}</td>
+                  <td>${order.status || ""}</td>
+                </tr>
+              `;
+              $("#orderTableBody").html(html);
+
+              // Chi tiết tổng kết đơn hàng
+              let shippingFee = Number(order.shipping_fee) || 0;
+              if (order.shipping_method === "store") {
+                shippingFee = 0;
+              }
+              let finalTotal =
+                Number(order.total_amount) +
+                shippingFee -
+                Number(order.discount_amount || 0);
+              let summaryHtml = `
+                <div id="summary-details" style="margin-top:24px;">
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                      <span>Giá sản phẩm</span><span>${formatPrice(
+                        order.total_amount
+                      )}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                      <span>Phí vận chuyển</span><span>${formatPrice(
+                        shippingFee
+                      )}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                      <span>Phương thức giao hàng</span><span>${
+                        order.shipping_method === "store"
+                          ? "Nhận tại cửa hàng"
+                          : "Giao hàng tiêu chuẩn"
+                      }</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                      <span>Giảm giá</span><span>${formatPrice(
+                        order.discount_amount || 0
+                      )}</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                      <span>Ghi chú</span><span>${
+                        order.order_note && order.order_note.trim() !== ""
+                          ? order.order_note
+                          : "-"
+                      }</span>
+                  </div>
+                  <div style="display: flex; justify-content: space-between; font-weight: 700;">
+                      <span>Thành tiền</span><span>${formatPrice(
+                        finalTotal
+                      )}</span>
+                  </div>
+                  <div style="border-bottom: 1px solid #eee; margin-top: 15px;"></div><br>
+                </div>
+              `;
+              $("#summary-details").html(summaryHtml);
+
+              // Danh sách sản phẩm
+              let productsHtml = `
+                <div class="section-title" style="font-weight:700;font-size:18px;">Chi tiết sản phẩm được giao</div>
+                <div>
+              `;
+              if (response.items && response.items.length > 0) {
+                response.items.forEach(function (item) {
+                  let imgSrc =
+                    item.variant_image || item.product_image || "default.jpg";
+                  productsHtml += `
+                    <div class="row align-items-center mb-3 px-3 py-3" style="background: #F5D28E; border-radius: 12px;">
+                      <div class="col-md-2 col-4 text-center">
+                        <img src="${imgSrc}" alt="${
+                    item.product_name
+                  }" class="img-fluid rounded" style="width: 90px; height: 90px; object-fit: cover;">
+                      </div>
+                      <div class="col-md-8 col-8">
+                        <div class="fw-bold" style="font-size: 16px; margin-bottom: 4px;">${
+                          item.product_name || ""
+                        }</div>
+                        <div class="text-muted" style="font-size: 14px; margin-bottom: 4px;">${
+                          item.category_name || ""
+                        }</div>
+                        <div style="font-size: 14px; margin-bottom: 4px;">
+                          <span>Màu sắc: ${item.color || "-"}</span> |
+                          <span>Kích thước: ${item.size || "-"}</span>
+                        </div>
+                        <div style="font-size: 14px;">Số lượng: <span class="fw-bold">${
+                          item.quantity || 1
+                        }</span></div>
+                      </div>
+                      <div class="col-md-2 col-12 text-md-end text-start mt-3 mt-md-0" style="font-size: 18px; font-weight: 600; color: #222;">
+                        ${formatPrice(
+                          Number(item.price) * Number(item.quantity)
+                        )}
+                      </div>
+                    </div>
+                  `;
+                });
+              } else {
+                productsHtml += `<div>Không có sản phẩm nào trong đơn hàng này.</div>`;
+              }
+              productsHtml += `</div>`;
+              $("#order-products").html(productsHtml);
+            } else {
+              $("#orderTableBody").html(
+                '<tr><td colspan="6">Không có dữ liệu</td></tr>'
+              );
+              $("#order-products").html("");
+              $("#summary-details").html("");
+              $("#order-code").text(orderId);
+            }
+          },
+          "json"
+        ).fail(function () {
+          $("#orderTableBody").html(
+            '<tr><td colspan="6">Lỗi khi tải dữ liệu</td></tr>'
+          );
+          $("#order-products").html("");
+          $("#summary-details").html("");
+          $("#order-code").text(orderId);
+        });
+      }
+
+      $(document).ready(function () {
+        loadOrderDetail();
+        // Quay lại trang trước
+        $("#back-button").click(function () {
+          window.history.back();
+        });
+      });
+    </script>
+    <div id="footer-placeholder"></div>
+    <script>
+      $(function () {
+        $("#footer-placeholder").load("../HEADER-FOOTER/Footer.html");
+      });
+    </script>
+  </body>
+</html>

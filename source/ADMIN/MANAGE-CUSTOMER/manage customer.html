@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Danh sách khách hàng | Quản trị Admin</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="../main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+    <!-- or -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <!-- Font-icon css-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css"
+    />
+  </head>
+
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
+    .modal-content {
+      background-color: white;
+      margin: 10% auto;
+      padding: 20px;
+      width: 50%;
+      border-radius: 5px;
+    }
+    .modal-content label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    .modal-content input,
+    .modal-content select {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+    }
+    .modal-content button {
+      padding: 10px 20px;
+      margin-right: 10px;
+    }
+  </style>
+
+  <body class="app sidebar-mini rtl">
+    <!-- Navbar-->
+    <header class="app-header">
+      <!-- Sidebar toggle button--><a
+        class="app-sidebar__toggle"
+        href="#"
+        data-toggle="sidebar"
+        aria-label="Hide Sidebar"
+      ></a>
+      <!-- Navbar Right Menu-->
+      <ul class="app-nav">
+        <!-- User Menu-->
+        <li>
+          <a class="app-nav__item" href="../../LOGIN/Logout.php"
+            ><i class="bx bx-log-out bx-rotate-180"></i>
+          </a>
+        </li>
+      </ul>
+    </header>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+      <div class="app-sidebar__user">
+        <div>
+          <p class="app-sidebar__user-name"><b>Quản lý LenLab</b></p>
+          <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
+        </div>
+      </div>
+      <hr />
+      <ul class="app-menu">
+        <li>
+          <a class="app-menu__item" href="../DASHBOARD/Trang tổng quan.html"
+            ><i class="app-menu__icon bx bx-tachometer"></i
+            ><span class="app-menu__label">Bảng điều khiển</span></a
+          >
+        </li>
+        <li>
+          <a class="app-menu__item" href="../manage product.html"
+            ><i class="app-menu__icon bx bx-purchase-tag-alt"></i
+            ><span class="app-menu__label">Quản lý sản phẩm</span></a
+          >
+        </li>
+        <li>
+          <a
+            class="app-menu__item haha"
+            href="../MANAGE-CUSTOMER/manage customer.html"
+            ><i class="app-menu__icon bx bx-id-card"></i>
+            <span class="app-menu__label">Quản lý khách hàng</span></a
+          >
+        </li>
+
+        <li>
+          <a class="app-menu__item" href="../MANAGE-ORDER/ManageOrder.html"
+            ><i class="app-menu__icon bx bx-task"></i
+            ><span class="app-menu__label">Quản lý đơn hàng</span></a
+          >
+        </li>
+      </ul>
+    </aside>
+    <main class="app-content">
+      <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+          <li class="breadcrumb-item active">
+            <a href="#"><b>Danh sách khách hàng</b></a>
+          </li>
+        </ul>
+        <div id="clock"></div>
+      </div>
+      <div
+        id="update-message"
+        style="
+          display: none;
+          position: fixed;
+          top: 100px;
+          right: 20px;
+          background: #067b37;
+          color: white;
+          padding: 10px 20px;
+          border-radius: 5px;
+          font-size: 15px;
+          z-index: 1001;
+        "
+      >
+        Cập nhật khách hàng thành công!
+      </div>
+      <div
+        id="delete-message"
+        style="
+          display: none;
+          position: fixed;
+          top: 100px;
+          right: 20px;
+          background: #067b37;
+          color: white;
+          padding: 10px 20px;
+          border-radius: 5px;
+          font-size: 15px;
+          z-index: 1001;
+        "
+      >
+        Xóa khách hàng thành công!
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tile">
+            <div class="tile-body">
+              <div class="row element-button">
+                <div class="col-sm-2">
+                  <a
+                    class="btn btn-add btn-sm"
+                    href="add customer.html"
+                    title="Thêm"
+                    ><i class="fas fa-plus"></i> Thêm khách hàng</a
+                  >
+                </div>
+              </div>
+
+              <!-- bảng danh mục khách hàng -->
+              <table class="table table-hover table-bordered" id="sampleTable">
+                <thead>
+                  <tr>
+                    <th>Họ và tên</th>
+                    <th>Email</th>
+                    <th>Giới tính</th>
+                    <th>Tổng đơn hàng</th>
+                    <th>Tổng tiền đã mua</th>
+                    <th>Chức năng</th>
+                  </tr>
+                </thead>
+                <tbody id="customer-list">
+                  <!-- Thông tin khách hàng sẽ được chèn động bằng JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Essential javascripts for application to work-->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="src/jquery.table2excel.js"></script>
+    <script src="js/main.js"></script>
+    <!-- The javascript plugin to display page loading on top-->
+    <script src="js/plugins/pace.min.js"></script>
+    <!-- Page specific javascripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <!-- Data table plugin-->
+    <script
+      type="text/javascript"
+      src="js/plugins/jquery.dataTables.min.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="js/plugins/dataTables.bootstrap.min.js"
+    ></script>
+
+    <!-- script chính xử lý các thao tác -->
+    <script>
+      $(document).ready(function () {
+        // Load danh sách khách hàng
+        function loadCustomers() {
+          $.get(
+            "manage customer.php",
+            { action: "get_customers" },
+            function (response) {
+              if (response.success) {
+                const customers = response.data;
+                let html = "";
+                customers.forEach((customer) => {
+                  // Chuyển đổi giới tính sang tiếng Việt
+                  let gender = "";
+                  switch (customer.gender) {
+                    case "male":
+                      gender = "Nam";
+                      break;
+                    case "female":
+                      gender = "Nữ";
+                      break;
+                    case "other":
+                      gender = "Khác";
+                      break;
+                    default:
+                      gender = "Không xác định";
+                  }
+                  const totalSpent = parseInt(
+                    customer.total_spent || 0
+                  ).toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  });
+                  html += `
+                                <tr data-customer-id="${customer.id}">
+                                    <td>${customer.name}</td>
+                                    <td>${customer.email}</td>
+                                    <td>${gender}</td>
+                                    <td>${customer.total_orders || 0}</td>
+                                    <td>${totalSpent}</td>
+                                    <td>
+                                      <div class="action-buttons">
+                                        <button class="delete-btn btn btn-primary btn-sm trash" data-customer-id="${
+                                          customer.id
+                                        }"><i class="fas fa-trash-alt"></i></button>
+                                      </div>
+                                    </td>
+                                </tr>
+                            `;
+                });
+                $("#customer-list").html(html);
+              } else {
+                alert(response.error);
+              }
+            },
+            "json"
+          ).fail(function () {
+            alert("Lỗi khi tải danh sách khách hàng.");
+          });
+        }
+
+        // Xử lý xóa khách hàng
+        $(document).on("click", ".delete-btn", function () {
+          const customerId = $(this).data("customer-id");
+          if (confirm("Bạn có chắc chắn muốn xóa khách hàng này?")) {
+            $.post(
+              "manage customer.php",
+              { action: "delete_customer", customer_id: customerId },
+              function (response) {
+                if (response.success) {
+                  $("#delete-message").fadeIn(300).delay(1500).fadeOut(300);
+                  loadCustomers(); // Tải lại danh sách khách hàng
+                } else {
+                  alert(response.error);
+                }
+              },
+              "json"
+            ).fail(function () {
+              alert("Lỗi khi xóa khách hàng.");
+            });
+          }
+        });
+
+        // Load danh sách khách hàng khi trang được tải
+        loadCustomers();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Danh sách đơn hàng | Quản trị Admin</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="../main.css" />
+    <style>
+      .badge-warning {
+        background-color: #ffc107;
+        color: black;
+      }
+      .badge-danger {
+        background-color: #dc3545;
+      }
+      .badge-info {
+        background-color: #17a2b8;
+      }
+      .badge-primary {
+        background-color: #007bff;
+      }
+      .badge-success {
+        background-color: #28a745;
+      }
+      .badge-secondary {
+        background-color: #6c757d;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+    <!-- or -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <!-- Font-icon css-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css"
+    />
+  </head>
+
+  <body onload="time()" class="app sidebar-mini rtl">
+    <!-- Navbar-->
+    <header class="app-header">
+      <!-- Sidebar toggle button--><a
+        class="app-sidebar__toggle"
+        href="#"
+        data-toggle="sidebar"
+        aria-label="Hide Sidebar"
+      ></a>
+      <!-- Navbar Right Menu-->
+      <ul class="app-nav">
+        <!-- User Menu-->
+        <li>
+          <a class="app-nav__item" href="../../LOGIN/Logout.php"
+            ><i class="bx bx-log-out bx-rotate-180"></i>
+          </a>
+        </li>
+      </ul>
+    </header>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+      <div class="app-sidebar__user">
+        <div>
+          <p class="app-sidebar__user-name"><b>Quản lý LenLab</b></p>
+          <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
+        </div>
+      </div>
+      <hr />
+      <ul class="app-menu">
+        <li>
+          <a class="app-menu__item" href="../DASHBOARD/Trang tổng quan.html"
+            ><i class="app-menu__icon bx bx-tachometer"></i
+            ><span class="app-menu__label">Bảng điều khiển</span></a
+          >
+        </li>
+        <li>
+          <a class="app-menu__item" href="../manage product.html"
+            ><i class="app-menu__icon bx bx-purchase-tag-alt"></i
+            ><span class="app-menu__label">Quản lý sản phẩm</span></a
+          >
+        </li>
+        <li>
+          <a
+            class="app-menu__item"
+            href="../MANAGE-CUSTOMER/manage customer.html"
+            ><i class="app-menu__icon bx bx-id-card"></i>
+            <span class="app-menu__label">Quản lý khách hàng</span></a
+          >
+        </li>
+
+        <li>
+          <a class="app-menu__item haha" href="../MANAGE-ORDER/ManageOrder.html"
+            ><i class="app-menu__icon bx bx-task"></i
+            ><span class="app-menu__label">Quản lý đơn hàng</span></a
+          >
+        </li>
+      </ul>
+    </aside>
+
+    <!--Giao diện làm việc-->
+    <main class="app-content">
+      <!-- Thanh quản lý voucher-->
+      <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+          <li class="breadcrumb-item active">
+            <a href="../MANAGE-ORDER/ManageVoucher.html"
+              ><b>Quản lý voucher</b></a
+            >
+          </li>
+        </ul>
+        <div id="clock"></div>
+      </div>
+      <!-- Thanh danh sách đơn hàng-->
+      <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+          <li class="breadcrumb-item active">
+            <a href=""><b>Danh sách đơn hàng</b></a>
+          </li>
+        </ul>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tile">
+            <div class="tile-body">
+              <div class="row element-button">
+                <div class="col-sm-2">
+                  <a
+                    class="btn btn-add btn-sm"
+                    href="AddOrder.html"
+                    title="Thêm"
+                    ><i class="fas fa-plus"></i> Tạo mới đơn hàng</a
+                  >
+                </div>
+
+                <div class="col-sm-2">
+                  <a
+                    class="btn btn-sm print-file"
+                    type="button"
+                    title="In"
+                    onclick="myApp.printTable()"
+                    ><i class="fas fa-print"></i> In dữ liệu</a
+                  >
+                </div>
+
+                <div class="col-sm-2">
+                  <a
+                    class="btn btn-delete btn-sm"
+                    type="button"
+                    title="Xóa"
+                    onclick="myFunction(this)"
+                    ><i class="fas fa-trash-alt"></i> Xóa tất cả
+                  </a>
+                </div>
+              </div>
+              <table class="table table-hover table-bordered" id="orderTable">
+                <thead>
+                  <tr>
+                    <th width="10"><input type="checkbox" id="all" /></th>
+                    <th>ID đơn hàng</th>
+                    <th>Khách hàng</th>
+                    <th>Thời gian đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Tình trạng</th>
+                    <th>Tính năng</th>
+                  </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                  <!-- Dữ liệu sẽ được load ở đây -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- jQuery và Bootstrap JS -->
+    <!-- Thêm jQuery CDN trước tất cả các script khác -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- jQuery Confirm -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+
+    <!-- script chính xử lý các thao tác -->
+    <script>
+      const now = new Date().toLocaleString("vi-VN");
+      //Thời Gian
+      function time() {
+        var today = new Date();
+        var weekday = new Array(7);
+        weekday[0] = "Chủ Nhật";
+        weekday[1] = "Thứ Hai";
+        weekday[2] = "Thứ Ba";
+        weekday[3] = "Thứ Tư";
+        weekday[4] = "Thứ Năm";
+        weekday[5] = "Thứ Sáu";
+        weekday[6] = "Thứ Bảy";
+        var day = weekday[today.getDay()];
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        nowTime = h + " giờ " + m + " phút " + s + " giây";
+        if (dd < 10) {
+          dd = "0" + dd;
+        }
+        if (mm < 10) {
+          mm = "0" + mm;
+        }
+        today = day + ", " + dd + "/" + mm + "/" + yyyy;
+        tmp = '<span class="date"> ' + today + " - " + nowTime + "</span>";
+        document.getElementById("clock").innerHTML = tmp;
+        clocktime = setTimeout("time()", "1000", "Javascript");
+
+        function checkTime(i) {
+          if (i < 10) {
+            i = "0" + i;
+          }
+          return i;
+        }
+      }
+    </script>
+  </body>
+  <script>
+    // Hàm định dạng tiền tệ
+    function formatPrice(amount) {
+      return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
+    }
+
+    //Lấy danh sách đơn hàng
+    $(document).ready(function () {
+      function loadOrders() {
+        // Nếu đã khởi tạo DataTable thì hủy trước
+        if ($.fn.DataTable.isDataTable("#orderTable")) {
+          $("#orderTable").DataTable().destroy();
+        }
+        $.get(
+          "ManageOrder.php",
+          { action: "get_orders" },
+          function (response) {
+            console.log(response); // In toàn bộ JSON
+            if (response.success) {
+              let html = "";
+              response.data.forEach(function (order) {
+                console.log(order); // In từng bản ghi
+                const statusMap = {
+                  pending: { class: "badge-warning", text: "Chờ duyệt" },
+                  processing: { class: "badge-primary", text: "Đang xử lý" },
+                  shipped: { class: "badge-info", text: "Đang giao hàng" },
+                  delivered: { class: "badge-success", text: "Hoàn thành" },
+                  cancelled: { class: "badge-danger", text: "Đã huỷ" },
+                };
+
+                const status = statusMap[order.status] || {
+                  class: "badge-secondary",
+                  text: order.status,
+                };
+
+                html += `
+  <tr>
+    <td width="10"><input type="checkbox" name="check1" value="${
+      order.id
+    }" /></td>
+    <td><a href="../MANAGE-ORDER/ManageOrderDetail.html?id=${order.id}">${
+                  order.order_code
+                }</a></td>
+    <td>${order.customer_name}</td>
+    <td>${order.order_date}</td>
+    <td>${Number(order.total).toLocaleString("vi-VN")} đ</td>
+    <td><span class="badge ${status.class}">${status.text}</span></td>
+    <td>
+      <button class="btn btn-primary btn-sm trash" type="button" title="Xóa"><i class="fas fa-trash-alt"></i></button>
+      <button class="btn btn-primary btn-sm edit" type="button" title="Sửa"><i class="fa fa-edit"></i></button>
+    </td>
+  </tr>
+`;
+              });
+              $("#orderTableBody").html(html);
+            } else {
+              $("#orderTableBody").html(
+                '<tr><td colspan="7">Không có dữ liệu</td></tr>'
+              );
+            }
+            $("#orderTable").DataTable();
+          },
+          "json"
+        ).fail(function () {
+          $("#orderTableBody").html(
+            '<tr><td colspan="7">Lỗi khi tải dữ liệu</td></tr>'
+          );
+        });
+      }
+      loadOrders();
+    });
+
+    // Xử lý sự kiện click nút xóa
+    $(document).on("click", ".trash", function () {
+      var orderId = $(this).closest("tr").find("input[type='checkbox']").val();
+      $.confirm({
+        title: "Xác nhận",
+        content: "Bạn có chắc chắn muốn xóa đơn hàng này?",
+        buttons: {
+          confirm: function () {
+            $.post(
+              "ManageOrder.php",
+              {
+                action: "delete_order",
+                order_id: orderId,
+              },
+              function (response) {
+                if (response.success) {
+                  swal("Thành công!", "Đơn hàng đã được xóa.", "success");
+                  setTimeout(function () {
+                    location.reload();
+                  }, 2000);
+                } else {
+                  swal("Lỗi!", response.message, "error");
+                }
+              },
+              "json"
+            );
+          },
+          cancel: function () {},
+        },
+      });
+    });
+
+    //Xử lý sự kiện click nút sửa
+    $(document).on("click", ".edit", function () {
+      var orderId = $(this).closest("tr").find("input[type='checkbox']").val();
+      window.location.href = `../MANAGE-ORDER/ManageOrderDetail.html?id=${orderId}`;
+    });
+
+    // Xử lý sự kiện click nút xóa tất cả
+    $(document).on("click", ".btn-delete", function () {
+      var selectedOrders = [];
+      $("input[name='check1']:checked").each(function () {
+        selectedOrders.push($(this).val());
+      });
+
+      if (selectedOrders.length === 0) {
+        swal(
+          "Thông báo",
+          "Vui lòng chọn ít nhất một đơn hàng để xóa.",
+          "warning"
+        );
+        return;
+      }
+
+      $.confirm({
+        title: "Xác nhận",
+        content: "Bạn có chắc chắn muốn xóa các đơn hàng đã chọn?",
+        buttons: {
+          confirm: function () {
+            $.post(
+              "ManageOrder.php",
+              { action: "delete_order", ids: selectedOrders },
+              function (response) {
+                if (response.success) {
+                  swal("Thành công!", "Các đơn hàng đã được xóa.", "success");
+                  setTimeout(function () {
+                    location.reload();
+                  }, 2000);
+                } else {
+                  swal("Lỗi!", response.message, "error");
+                }
+              },
+              "json"
+            );
+          },
+          cancel: function () {},
+        },
+      });
+    });
+
+    // In dữ liệu
+    myApp = {
+      printTable: function () {
+        const printContents = document.getElementById("orderTable").outerHTML;
+        const now = new Date().toLocaleString("vi-VN");
+
+        const popupWin = window.open(
+          "",
+          "_blank",
+          "width=1200,height=1000,scrollbars=yes"
+        );
+        popupWin.document.open();
+        popupWin.document.write(`
+      <html>
+        <head>
+          <title>In dữ liệu</title>
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+          <style>
+            body {
+              font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+              padding: 20px;
+              color: #333;
+            }
+            h2 {
+              text-align: center;
+              margin-bottom: 20px;
+            }
+            table {
+              width: 100%;
+              border-collapse: collapse;
+            }
+            th, td {
+              padding: 10px;
+              border: 1px solid #ccc;
+              text-align: left;
+              vertical-align: middle;
+            }
+            th {
+              background-color: #f5f5f5;
+            }
+            .badge {
+              padding: 5px 10px;
+              border-radius: 8px;
+              color: white;
+              font-size: 0.85rem;
+              display: inline-block;
+            }
+            .badge-success { background-color: #28a745; }
+            .badge-warning { background-color: #ffc107; color: black; }
+            .badge-danger  { background-color: #dc3545; }
+            .text-right { text-align: right; }
+            small { display: block; text-align: right; margin-bottom: 10px; }
+          </style>
+        </head>
+        <body onload="window.print()">
+          <h2>DANH SÁCH ĐƠN HÀNG</h2>
+          <small>In lúc: ${now}</small>
+          ${printContents}
+        </body>
+      </html>
+    `);
+        popupWin.document.close();
+      },
+    };
+
+    // Xử lý sự kiện click nút chọn tất cả
+    $(document).ready(function () {
+      $("#all").click(function () {
+        $("input[name='check1']").prop("checked", this.checked);
+      });
+    });
+
+    //Xử lý sự kiện click nút in
+    $(document).on("click", ".print-file", function () {
+      myApp.printTable();
+    });
+  </script>
+</html>

@@ -1,0 +1,135 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  line-height: 1.6;
+}
+
+.order-container {
+  max-width: 800px;
+  margin: 30px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.order-header {
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.order-id {
+  color: #666;
+  font-size: 14px;
+}
+
+h1,
+h2 {
+  color: #333;
+  line-height: 0.5;
+}
+
+h1 {
+  font-size: 20px;
+  font-weight: normal;
+  margin-bottom: 20px;
+  margin-top: 30px;
+  text-decoration: underline;
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.confirmation-message {
+  color: #e56332;
+  font-weight: 500;
+}
+
+hr {
+  margin: 25px 0;
+  border-top: 1px solid #eee;
+}
+.section-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.order-summary {
+  margin-bottom: 30px;
+}
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.summary-label {
+  color: #666;
+}
+.summary-value {
+  font-weight: 500;
+}
+.total {
+  font-weight: 600;
+  font-size: 18px;
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+.product-table {
+  width: 100%;
+  margin: 20px 0;
+  border-collapse: collapse;
+}
+.product-table th,
+.product-table td {
+  padding: 12px 0;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+.product-table th {
+  color: #666;
+  font-weight: normal;
+}
+.customer-info,
+.address-section {
+  margin-bottom: 25px;
+}
+.address-icon {
+  margin-right: 8px;
+  color: #666;
+}
+.address-title {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.address-content {
+  padding-left: 24px;
+}
+a {
+  color: #0066cc;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+.product-category {
+  color: #666;
+  font-weight: none;
+}
+.product-name {
+  color: black;
+  font-weight: bold;
+  font-size: 16px;
+}
+.color-info {
+  color: #666;
+  font-weight: none;
+}
+.icon-red {
+  color: #dc3545;
+}

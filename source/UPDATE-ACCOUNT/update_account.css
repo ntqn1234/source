@@ -1,0 +1,719 @@
+body {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+.container {
+  max-width: 500px; /* Giới hạn chiều rộng */
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Căn giữa login-section */
+.login-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px); /* Chiều cao trừ header/footer */
+
+  padding: 40px 20px;
+}
+
+.login-box {
+  padding: 30px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+}
+
+.login-box h2 {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+  text-align: center;
+}
+
+.login-box label {
+  display: block;
+  font-weight: bold;
+  color: #555;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 15px;
+  border-radius: 4px;
+  border: 1px solid #aa401c;
+  margin-bottom: 20px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.gender-options {
+  display: flex;
+  gap: 20px; /* Giảm khoảng cách giữa các lựa chọn */
+  margin-bottom: 20px;
+}
+
+.gender-options label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-weight: normal;
+}
+
+.gender-options input[type="radio"] {
+  margin-right: 6px;
+}
+
+.login-btn {
+  background-color: #a74428; /* Màu chủ đạo */
+  color: white;
+  border: none;
+  padding: 12px 0;
+  width: 100%;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.login-btn:hover {
+  background-color: #e56332; /* Màu hover */
+  font-weight: 700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-section {
+    padding: 20px;
+  }
+
+  .login-box {
+    padding: 20px;
+  }
+
+  .login-box h2 {
+    font-size: 20px;
+  }
+
+  .gender-options {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+/* Đảm bảo icon căn giữa và không bị dính sát input */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper .form-control {
+  padding-right: 40px; /* chừa chỗ cho icon */
+}
+
+#toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+  font-size: 18px;
+  z-index: 2;
+}
+#toggle-password:hover {
+  color: #e56332;
+}
+
+/* Tùy chỉnh bảng đơn hàng */
+.custom-order-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề bảng */
+.custom-order-table thead th {
+  background-color: #e56332; /* Màu chủ đạo từ nút CẬP NHẬT */
+  color: white;
+  font-weight: 600;
+  padding: 12px 15px;
+  text-align: center;
+  border-bottom: 2px solid #a74428; /* Màu hover của nút */
+}
+
+/* Các ô trong bảng */
+.custom-order-table td {
+  padding: 12px 15px;
+  vertical-align: middle;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Hiệu ứng hover cho hàng */
+.custom-order-table tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+/* Tùy chỉnh badge trạng thái */
+.custom-order-table .badge {
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* Màu sắc cho badge */
+.custom-order-table .badge-warning {
+  background-color: #ffc107;
+  color: #333;
+}
+.custom-order-table .badge-primary {
+  background-color: #a74428;
+  color: white;
+}
+.custom-order-table .badge-info {
+  background-color: #17a2b8;
+  color: white;
+}
+.custom-order-table .badge-success {
+  background-color: #28a745;
+  color: white;
+}
+.custom-order-table .badge-danger {
+  background-color: #dc3545;
+  color: white;
+}
+.custom-order-table .badge-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Liên kết trong cột ID đơn hàng */
+.custom-order-table td a {
+  color: #e56332;
+  text-decoration: none;
+  font-weight: 500;
+}
+.custom-order-table td a:hover {
+  color: #a74428;
+  text-decoration: underline;
+}
+
+/* Cột chiều rộng cố định */
+.custom-order-table th:nth-child(1),
+.custom-order-table td:nth-child(1) {
+  width: 20%; /* ID đơn hàng */
+}
+.custom-order-table th:nth-child(2),
+.custom-order-table td:nth-child(2) {
+  width: 25%; /* Người nhận */
+}
+.custom-order-table th:nth-child(3),
+.custom-order-table td:nth-child(3) {
+  width: 20%; /* Thời gian đặt */
+}
+.custom-order-table th:nth-child(4),
+.custom-order-table td:nth-child(4) {
+  width: 20%; /* Tổng tiền */
+}
+.custom-order-table th:nth-child(5),
+.custom-order-table td:nth-child(5) {
+  width: 15%; /* Tình trạng */
+}
+
+/* Tùy chỉnh giao diện DataTables */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  background-color: #e56332;
+  color: white !important;
+  border-radius: 4px;
+  margin: 0 3px;
+  padding: 5px 10px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #a74428;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #a74428;
+  color: white !important;
+}
+
+.dataTables_wrapper .dataTables_filter input {
+  border: 1px solid #aa401c; /* Viền giống form */
+  border-radius: 4px;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.dataTables_wrapper .dataTables_length select {
+  border: 1px solid #aa401c;
+  border-radius: 4px;
+  padding: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .custom-order-table th,
+  .custom-order-table td {
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  /* Ẩn một số cột trên màn hình nhỏ */
+  .custom-order-table th:nth-child(3),
+  .custom-order-table td:nth-child(3) {
+    display: none; /* Ẩn cột Thời gian đặt */
+  }
+
+  .custom-order-table th:nth-child(1),
+  .custom-order-table td:nth-child(1) {
+    width: 30%;
+  }
+  .custom-order-table th:nth-child(2),
+  .custom-order-table td:nth-child(2) {
+    width: 30%;
+  }
+  .custom-order-table th:nth-child(4),
+  .custom-order-table td:nth-child(4) {
+    width: 25%;
+  }
+  .custom-order-table th:nth-child(5),
+  .custom-order-table td:nth-child(5) {
+    width: 15%;
+  }
+}
+
+/* Tùy chỉnh bố cục tổng thể */
+.app-content {
+  max-width: 900px; /* Tăng từ 800px */
+  margin: 30px auto;
+  padding: 0 15px;
+}
+
+.app-title {
+  margin-bottom: 15px;
+}
+
+.tile {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+}
+
+/* Tùy chỉnh bảng đơn hàng */
+.custom-order-table {
+  max-width: 850px; /* Tăng từ 700px */
+  margin: 0 auto;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề bảng */
+.custom-order-table thead th {
+  background-color: #f2c7b2;
+  color: #8b2e1c; /* Màu sắc nhẹ nhàng hơn */
+  font-weight: 600;
+  padding: 10px 12px; /* Tăng từ 8px */
+  text-align: center;
+  font-size: 15px; /* Tăng từ 14px */
+  border-bottom: 2px solid #a74428;
+}
+
+/* Các ô trong bảng */
+.custom-order-table td {
+  padding: 10px 12px; /* Tăng từ 8px */
+  vertical-align: middle;
+  text-align: center;
+  font-size: 14px; /* Tăng từ 13px */
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Hiệu ứng hover cho hàng */
+.custom-order-table tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+/* Tùy chỉnh badge trạng thái */
+.custom-order-table .badge {
+  padding: 6px 12px; /* Tăng nhẹ kích thước */
+  border-radius: 10px;
+  font-size: 13px; /* Tăng từ 12px */
+  font-weight: 500;
+}
+
+/* Màu sắc cho badge */
+.custom-order-table .badge-warning {
+  background-color: #ffc107;
+  color: #333;
+}
+.custom-order-table .badge-primary {
+  background-color: #a74428;
+  color: white;
+}
+.custom-order-table .badge-info {
+  background-color: #17a2b8;
+  color: white;
+}
+.custom-order-table .badge-success {
+  background-color: #28a745;
+  color: white;
+}
+.custom-order-table .badge-danger {
+  background-color: #dc3545;
+  color: white;
+}
+.custom-order-table .badge-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+/* Liên kết trong cột ID đơn hàng */
+.custom-order-table td a {
+  color: #a74428;
+  text-decoration: none;
+  font-weight: 500;
+}
+.custom-order-table td a:hover {
+  color: #a74428;
+  text-decoration: underline;
+}
+
+/* Cột chiều rộng cố định */
+.custom-order-table th:nth-child(1),
+.custom-order-table td:nth-child(1) {
+  width: 22%; /* Giảm nhẹ để cân đối */
+}
+.custom-order-table th:nth-child(2),
+.custom-order-table td:nth-child(2) {
+  width: 28%; /* Giảm nhẹ */
+}
+.custom-order-table th:nth-child(3),
+.custom-order-table td:nth-child(3) {
+  width: 22%; /* Tăng nhẹ */
+}
+.custom-order-table th:nth-child(4),
+.custom-order-table td:nth-child(4) {
+  width: 18%; /* Tăng nhẹ */
+}
+.custom-order-table th:nth-child(5),
+.custom-order-table td:nth-child(5) {
+  width: 10%; /* Giữ nguyên */
+}
+
+/* Tùy chỉnh nút phân trang DataTables */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  background-color: #e56332;
+  color: white !important;
+  border-radius: 4px;
+  margin: 0 2px;
+  padding: 4px 10px; /* Tăng nhẹ kích thước */
+  font-size: 13px;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+  background-color: #a74428;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+  background-color: #a74428;
+  color: white !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-content {
+    padding: 0 10px;
+  }
+
+  .custom-order-table {
+    max-width: 100%; /* Đầy đủ chiều rộng trên mobile */
+  }
+
+  .custom-order-table th,
+  .custom-order-table td {
+    padding: 8px 10px; /* Giảm nhẹ so với desktop */
+    font-size: 13px; /* Giảm nhẹ */
+  }
+
+  /* Ẩn cột Thời gian đặt trên mobile */
+  .custom-order-table th:nth-child(3),
+  .custom-order-table td:nth-child(3) {
+    display: none;
+  }
+
+  /* Điều chỉnh chiều rộng cột trên mobile */
+  .custom-order-table th:nth-child(1),
+  .custom-order-table td:nth-child(1) {
+    width: 30%;
+  }
+  .custom-order-table th:nth-child(2),
+  .custom-order-table td:nth-child(2) {
+    width: 30%;
+  }
+  .custom-order-table th:nth-child(4),
+  .custom-order-table td:nth-child(4) {
+    width: 25%;
+  }
+  .custom-order-table th:nth-child(5),
+  .custom-order-table td:nth-child(5) {
+    width: 15%;
+  }
+}
+
+/* Tùy chỉnh giao diện cho Order Detail */
+/* Tùy chỉnh tổng thể */
+.app-content {
+  max-width: 900px;
+  margin: 30px auto;
+  padding: 0 15px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Màu mã đơn hàng */
+.order-code-color {
+  color: #e56332; /* Màu cam chủ đạo */
+  font-weight: 600;
+}
+
+/* Card thông tin đơn hàng */
+.order-details-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.section-title {
+  font-size: 30px;
+  font-weight: 600;
+  color: black;
+  margin-bottom: 0;
+}
+
+.btn-primary {
+  background-color: #e56332;
+  border-color: #e56332;
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.btn-primary:hover {
+  background-color: #a74428;
+  border-color: #a74428;
+}
+
+/* Bảng thông tin đơn hàng */
+.custom-order-table {
+  max-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.custom-order-table thead th {
+  background-color: #e56332;
+  color: white;
+  font-weight: 700;
+  padding: 10px 12px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 2px solid #a74428;
+}
+
+.custom-order-table td {
+  padding: 10px 12px;
+  vertical-align: middle;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.custom-order-table tbody tr:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease;
+}
+
+/* Chiều rộng cột */
+.custom-order-table th:nth-child(1),
+.custom-order-table td:nth-child(1) {
+  width: 15%; /* Người nhận */
+}
+.custom-order-table th:nth-child(2),
+.custom-order-table td:nth-child(2) {
+  width: 15%; /* Số điện thoại */
+}
+.custom-order-table th:nth-child(3),
+.custom-order-table td:nth-child(3) {
+  width: 15%; /* Email */
+}
+.custom-order-table th:nth-child(4),
+.custom-order-table td:nth-child(4) {
+  width: 30%; /* Địa chỉ giao hàng - rộng hơn */
+}
+.custom-order-table th:nth-child(5),
+.custom-order-table td:nth-child(5) {
+  width: 15%; /* Phương thức thanh toán */
+}
+.custom-order-table th:nth-child(6),
+.custom-order-table td:nth-child(6) {
+  width: 10%; /* Tình trạng */
+}
+
+/* Card sản phẩm */
+.order-products-card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.order-products-list .row {
+  background-color: #fff !important;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 15px;
+  transition: box-shadow 0.2s ease;
+}
+
+.order-products-list .row:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.order-products-list img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+.order-products-list .fw-bold {
+  font-size: 16px;
+  color: black;
+  margin-bottom: 4px;
+}
+
+.order-products-list .text-muted {
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.order-products-list [style*="font-size: 14px"] {
+  font-size: 13px !important;
+  color: black;
+  margin-bottom: 4px;
+}
+
+.order-products-list [style*="font-size: 18px"] {
+  font-size: 16px !important;
+  color: #e56332;
+  font-weight: 600;
+}
+
+/* Tổng kết */
+.order-summary {
+  border-top: 1px solid #eee;
+  padding-top: 15px;
+}
+
+.order-summary > div {
+  background-color: transparent !important;
+}
+
+.order-summary [style*="display: flex"] {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  font-size: 14px;
+  color: black;
+}
+
+.order-summary [style*="font-weight: 700"] {
+  font-weight: 700;
+  font-size: 16px;
+  color: #e56332;
+}
+
+.order-summary [style*="border-bottom"] {
+  border-bottom: 1px solid #eee;
+  margin: 15px 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-content {
+    padding: 0 10px;
+  }
+
+  .custom-order-table th,
+  .custom-order-table td {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  /* Ẩn cột Email và Phương thức thanh toán trên mobile */
+  .custom-order-table th:nth-child(3),
+  .custom-order-table td:nth-child(3),
+  .custom-order-table th:nth-child(5),
+  .custom-order-table td:nth-child(5) {
+    display: none;
+  }
+
+  /* Điều chỉnh chiều rộng cột trên mobile */
+  .custom-order-table th:nth-child(1),
+  .custom-order-table td:nth-child(1) {
+    width: 25%;
+  }
+  .custom-order-table th:nth-child(2),
+  .custom-order-table td:nth-child(2) {
+    width: 25%;
+  }
+  .custom-order-table th:nth-child(4),
+  .custom-order-table td:nth-child(4) {
+    width: 40%;
+  }
+  .custom-order-table th:nth-child(6),
+  .custom-order-table td:nth-child(6) {
+    width: 10%;
+  }
+
+  .order-products-list .row {
+    flex-direction: column;
+    align-items: flex-start !important;
+    padding: 10px;
+  }
+
+  .order-products-list .col-4,
+  .order-products-list .col-8 {
+    width: 100%;
+    text-align: left !important;
+  }
+
+  .order-products-list img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 10px;
+  }
+
+  .order-products-list .col-12 {
+    margin-top: 10px;
+    text-align: left !important;
+  }
+}

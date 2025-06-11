@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <title>CART</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="Comment.css" />
+    <link rel="stylesheet" href="../HEADER-FOOTER/Footer.css" />
+    <link rel="stylesheet" href="../HEADER-FOOTER/Header.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+
+  <!-- style cho form đánh giá sản phẩm  -->
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif; /* Font mềm mại hơn */
+      margin: 0;
+      padding: 0;
+      background-color: #f8e7d9; /* Màu nền nhẹ nhàng */
+      color: #4a3c31; /* Màu chữ tối nhẹ */
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #ffffff;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05); /* Bóng nhẹ tạo chiều sâu */
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px); /* Hiệu ứng nâng nhẹ khi hover */
+    }
+
+    h1 {
+      text-align: center;
+      color: #8a3b12; /* Màu nâu đậm phù hợp với tông màu tổng thể */
+      font-size: 32px;
+      margin-bottom: 30px;
+      position: relative;
+    }
+
+    h1::after {
+      content: "";
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: #8a3b12; /* Màu hồng nhẹ để tạo điểm nhấn */
+      border-radius: 2px;
+    }
+
+    .review {
+      border-bottom: 1px solid #f0c2aa; /* Đường viền nhẹ nhàng */
+      padding: 20px 0;
+      margin-bottom: 20px;
+      background: #fff9f5; /* Màu nền nhạt cho mỗi đánh giá */
+      border-radius: 10px;
+      padding: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .review:hover {
+      background: #fff2eb; /* Hiệu ứng hover nhẹ */
+      transform: translateX(5px); /* Dịch chuyển nhẹ khi hover */
+    }
+
+    .review:last-child {
+      border-bottom: none;
+    }
+
+    .review .user {
+      font-weight: 600;
+      color: #8a3b12; /* Màu nâu đậm */
+      font-size: 18px;
+    }
+
+    .review .rating {
+      color: #f39c12; /* Màu vàng cho điểm đánh giá */
+      font-size: 16px;
+      margin-left: 10px;
+    }
+
+    .review .comment {
+      margin: 10px 0;
+      color: #6c4331; /* Màu chữ nhẹ hơn */
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    #review-form {
+      margin-top: 30px;
+      padding: 20px;
+      background: #f9e8db; /* Màu nền nhẹ nhàng cho form */
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    #review-form label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: 600;
+      color: #8a3b12;
+      font-size: 16px;
+    }
+
+    #review-form input,
+    #review-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #f0c2aa;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #fff;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #review-form input:focus,
+    #review-form textarea:focus {
+      border-color: #f67280; /* Điểm nhấn màu hồng khi focus */
+      box-shadow: 0 0 8px rgba(246, 114, 128, 0.2);
+      outline: none;
+    }
+
+    #review-form textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    #review-form button {
+      background: #e56332; /* Màu hồng nhẹ */
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    #review-form button:hover {
+      background: #e56332; /* Chuyển sang màu cam nhẹ khi hover */
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(229, 99, 50, 0.3);
+    }
+
+    .error {
+      color: #e74c3c; /* Màu đỏ cho thông báo lỗi */
+      text-align: center;
+      font-size: 16px;
+      margin: 20px 0;
+    }
+
+    .login-message {
+      text-align: center;
+      margin: 20px 0;
+      font-size: 16px;
+      color: #6c4331;
+    }
+
+    .login-message a {
+      color: #f67280; /* Màu hồng nhẹ cho liên kết */
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .login-message a:hover {
+      text-decoration: underline;
+      color: #e56332; /* Chuyển màu khi hover */
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        margin: 20px;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .review .user,
+      .review .rating,
+      .review .comment {
+        font-size: 14px;
+      }
+
+      #review-form input,
+      #review-form textarea,
+      #review-form button {
+        font-size: 14px;
+      }
+    }
+  </style>
+
+  <body>
+    <div class="container-fluid cart-container">
+      <div id="header-placeholder"></div>
+
+      <script>
+        $(function () {
+          $("#header-placeholder").load("../HEADER-FOOTER/Header.html");
+          $("#footer-placeholder").load("../HEADER-FOOTER/Footer.html");
+        });
+      </script>
+
+      <div class="container">
+        <h1 class="section-title2">ĐÁNH GIÁ SẢN PHẨM</h1>
+        <div id="reviews-list"></div>
+        <div id="review-form-container"></div>
+      </div>
+    </div>
+
+    <!-- Toast message cho thông báo thêm comment -->
+    <div
+      id="message-toast"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        z-index: 9999;
+      "
+    >
+      Đã thêm đánh giá sản phẩm !
+    </div>
+
+    <!--Có thể bạn quan tâm-->
+    <div class="related-products">
+      <h2 class="section-title2">CÓ THỂ BẠN QUAN TÂM</h2>
+      <div class="product-grid" id="products-grid"></div>
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        // Lấy product_id từ query string
+        const urlParams = new URLSearchParams(window.location.search);
+        const productId = urlParams.get("product_id");
+
+        if (!productId) {
+          $("#reviews-list").html(
+            '<p class="error">Không tìm thấy sản phẩm.</p>'
+          );
+          return;
+        }
+
+        // Hàm lấy danh sách đánh giá
+        function loadReviews() {
+          $.get(
+            `get_reviews.php?product_id=${productId}`,
+            function (data) {
+              if (data.error) {
+                $("#reviews-list").html(`<p class="error">${data.error}</p>`);
+                return;
+              }
+              $("#reviews-list").empty();
+              if (data.length === 0) {
+                $("#reviews-list").html(
+                  "<p>Chưa có đánh giá nào cho sản phẩm này.</p>"
+                );
+              } else {
+                data.forEach((review) => {
+                  $("#reviews-list").append(`
+                                <div class="review">
+                                    <p class="user">${
+                                      review.user_name
+                                    } <span class="rating">(${
+                    review.rating
+                  }/5)</span></p>
+                                    <p class="comment">${
+                                      review.comment || "Không có nhận xét"
+                                    }</p>
+                                </div>
+                            `);
+                });
+              }
+            },
+            "json"
+          ).fail(function () {
+            $("#reviews-list").html(
+              '<p class="error">Lỗi khi tải đánh giá.</p>'
+            );
+          });
+        }
+
+        // Kiểm tra trạng thái đăng nhập và hiển thị form đánh giá
+        $.get("../LOGIN/Check_login.php", function (response) {
+          if (response.is_logged_in) {
+            $("#review-form-container").html(`
+                        <form id="review-form">
+                            <label for="rating">Điểm đánh giá (1-5):</label>
+                            <input type="number" id="rating" min="1" max="5" required>
+                            <label for="comment">Nhận xét:</label>
+                            <textarea id="comment"></textarea>
+                            <button type="submit">Gửi đánh giá</button>
+                        </form>
+                    `);
+
+            // Xử lý gửi đánh giá
+            $("#review-form").on("submit", function (e) {
+              e.preventDefault();
+              const rating = $("#rating").val();
+              const comment = $("#comment").val();
+
+              $.post(
+                "submit_review.php",
+                {
+                  product_id: productId,
+                  rating: rating,
+                  comment: comment,
+                },
+                function (data) {
+                  if (data.error) {
+                    alert(data.error);
+                  } else {
+                    $("#message-toast").fadeIn(300).delay(1000).fadeOut(300);
+                    loadReviews(); // Tải lại danh sách đánh giá
+                    $("#review-form")[0].reset(); // Xóa form
+                  }
+                },
+                "json"
+              ).fail(function () {
+                alert("Lỗi khi gửi đánh giá.");
+              });
+            });
+          } else {
+            $("#review-form-container").html(`
+                        <p class="login-message">Vui lòng <a href="../LOGIN/Login.html">đăng nhập</a> để gửi đánh giá.</p>
+                    `);
+          }
+        });
+
+        // Tải đánh giá khi trang được tải
+        loadReviews();
+
+        //Khi nhấn nút xem sản phẩm
+        $(document).on("click", ".add-to-cart-btn", function () {
+          const productId = this.getAttribute("data-id");
+          window.location.href = `../PRODUCT-PAGE/product.html?id=${productId}`; // Chuyển đến product.html với id
+        });
+
+        // Hàm tải dữ liệu các sản phẩm trong mục Bộ sưu tập
+        function load4product() {
+          $.get(
+            "load4product.php",
+            function (response) {
+              if (response.error) {
+                alert(response.error);
+                return;
+              }
+
+              const products = response.products;
+
+              // Hiển thị 4 sản phẩm
+              let Html = "";
+              products.forEach((item) => {
+                Html += `
+                  <div class="product-card">
+                  <div class="product-tag">New</div>
+                  <div class="product-img">
+                    <img
+                      src="${item.image}"
+                      alt="${item.name}"
+                    />
+                  </div>
+                  <h4>${item.name}</h4>
+                  <button class="add-to-cart-btn" data-id="${item.id}">
+                    XEM SẢN PHẨM
+                  </button>
+                </div>
+                  `;
+              });
+              $("#products-grid").html(Html);
+            },
+            "json"
+          ).fail(function () {
+            alert("Lỗi khi tải thông tin sản phẩm");
+          });
+        }
+
+        load4product();
+      });
+    </script>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+      // Tải nội dung Footer vào phần tử #footer-placeholder
+      $(function () {
+        $("#footer-placeholder").load("../HEADER-FOOTER/Footer.html");
+      });
+    </script>
+  </body>
+</html>

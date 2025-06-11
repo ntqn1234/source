@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LEN LAB</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rowdies:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <link rel="stylesheet" href="Header.css" />
+  </head>
+  <body>
+    <header>
+      <div class="bg">
+        <div class="logo">LEN LAB</div>
+        <div class="menu">
+          <nav class="nav">
+            <ul>
+              <li><a href="../LANDING-PAGE/landingpage.html">Trang chủ</a></li>
+              <li class="dropdown">
+                <a href="#!"
+                  >Sản phẩm <i class="fas fa-chevron-down icon-menu"></i
+                ></a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a href="../LISTING-PAGE/listing page.html"
+                      >Nguyên phụ liệu</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../LISTING-PAGE/listing page.html">Đồ trang trí</a>
+                  </li>
+                  <li>
+                    <a href="../LISTING-PAGE/listing page.html"
+                      >Thời trang len</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../LISTING-PAGE/listing page.html">Combo tự làm</a>
+                  </li>
+                  <li>
+                    <a href="../LISTING-PAGE/listing page.html"
+                      >Sách hướng dẫn</a
+                    >
+                  </li>
+                  <li>
+                    <a href="../LISTING-PAGE/listing page.html">Thú bông len</a>
+                  </li>
+                </ul>
+              </li>
+              <li><a href="../INTRO/intro.html">Giới thiệu</a></li>
+              <li><a href="../NEWS/news.html">Tin tức</a></li>
+              <div class="user-cart">
+                <!-- Search -->
+                <div class="search-box">
+                  <form action="" id="search-form">
+                    <input
+                      type="text"
+                      id="search-text"
+                      placeholder="Tìm kiếm..."
+                    />
+                    <button type="submit" id="search-btn">
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </form>
+                </div>
+                <!-- User Profile -->
+                <div class="user-profile">
+                  <i class="fas fa-user" id="user-btn"></i>
+                  <div class="dropdown-menu user-dropdown">
+                    <ul>
+                      <li>
+                        <a
+                          href="../UPDATE-ACCOUNT/update_account.html"
+                          id="user-name"
+                        >
+                          <i class="fas fa-user-cog"></i>
+                          <span id="user-name-text">Tài khoản</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="../LOGIN/Login.html" id="login-link">
+                          <i class="fas fa-sign-in-alt"></i>
+                          Đăng nhập
+                        </a>
+                        <a
+                          href="../LOGIN/Logout.php"
+                          id="logout-link"
+                          style="display: none"
+                        >
+                          <i class="fas fa-sign-out-alt"></i>
+                          Đăng xuất
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <!-- Cart -->
+                <div class="cart-icon">
+                  <i class="fas fa-shopping-cart" id="cart-btn"></i>
+                  <span class="cart-count">0</span>
+                  <div class="dropdown-menu cart-dropdown">
+                    <p id="cart-message">Giỏ hàng của bạn trống.</p>
+                    <a href="../LOGIN/Login.html" id="cart-login-link"
+                      >Đăng nhập để xem sản phẩm</a
+                    >
+                  </div>
+                </div>
+              </div>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Toast message cho thông báo đăng nhập -->
+    <div
+      id="login-required-toast"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #f44336;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        z-index: 9999;
+      "
+    >
+      Vui lòng
+      <a
+        href="../LOGIN/Login.html"
+        style="color: #fff; text-decoration: underline"
+        >đăng nhập</a
+      >
+      để xem giỏ hàng!
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        // Mở/đóng menu khi click vào "Giới thiệu" và "Sản phẩm"
+        $(".dropdown > a").click(function (e) {
+          e.preventDefault();
+          var $dropdownMenu = $(this).next(".dropdown-menu");
+
+          // Đóng tất cả các menu khác
+          $(".dropdown-menu").not($dropdownMenu).slideUp();
+          // Toggle menu hiện tại
+          $dropdownMenu.stop(true, true).slideToggle();
+
+          // Toggle mũi tên chỉ hướng
+          $(this)
+            .find(".icon-menu")
+            .toggleClass("fa-chevron-down fa-chevron-right");
+        });
+
+        // Đảm bảo rằng dropdown đóng lại khi click ra ngoài
+        $(document).click(function (e) {
+          if (!$(e.target).closest(".dropdown").length) {
+            $(".dropdown-menu").slideUp();
+            $(".icon-menu")
+              .removeClass("fa-chevron-right")
+              .addClass("fa-chevron-down");
+          }
+        });
+
+        // Toggle user profile dropdown
+        $("#user-btn").click(function (e) {
+          e.stopPropagation(); // Prevent closing the dropdown when clicking on the user profile button
+          $(".user-dropdown").stop(true, true).slideToggle();
+        });
+
+        // Close dropdown when clicking outside
+        $(document).click(function (e) {
+          if (!$(e.target).closest(".user-profile").length) {
+            $(".user-dropdown").slideUp();
+          }
+        });
+      });
+
+      $(document).ready(function () {
+        // Cập nhật số lượng giỏ hàng
+        function updateCartCount() {
+          $.get(
+            "../HEADER-FOOTER/Cart_count.php",
+            function (cartResponse) {
+              $(".cart-count").text(cartResponse.item_count);
+            },
+            "json"
+          ).fail(function () {
+            $("#cart-count").text("0");
+          });
+        }
+
+        // Kiểm tra trạng thái đăng nhập
+        $.get(
+          "../LOGIN/Check_login.php",
+          function (response) {
+            if (response.is_logged_in) {
+              $("#user-name-text").text(response.user_name);
+              $("#logout-link").show();
+              $("#login-link").hide();
+              updateCartCount(); // Cập nhật số lượng giỏ hàng khi đã đăng nhập
+            } else {
+              $("#logout-link").hide();
+              $("#login-link").show();
+              $("#cart-count").text("0");
+            }
+          },
+          "json"
+        );
+
+        // Xử lý khi nhấn vào biểu tượng giỏ hàng
+        $("#cart-btn").on("click", function (e) {
+          e.preventDefault();
+          $.get(
+            "../LOGIN/Check_login.php",
+            function (response) {
+              if (response.is_logged_in) {
+                window.location.href = "../CART/cart.html"; // Chuyển đến trang giỏ hàng
+              } else {
+                $("#login-required-toast").fadeIn(300).delay(3000).fadeOut(300); // Hiển thị thông báo yêu cầu đăng nhập
+              }
+            },
+            "json"
+          );
+        });
+
+        // Xử lý tìm kiếm
+        $("#search-form").on("submit", function (e) {
+          e.preventDefault();
+          const keyword = $("#search-text").val().trim();
+          if (keyword) {
+            window.location.href = `../LISTING-PAGE/listing page.html?search=${encodeURIComponent(
+              keyword
+            )}`;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

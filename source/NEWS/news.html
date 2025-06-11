@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LEN LAB</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Rowdies:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="news.css" />
+  </head>
+  <body>
+    <header>
+      <div class="bg">
+        <div class="logo">LEN LAB</div>
+        <nav class="nav menu">
+          <ul>
+            <li><a href="../LANDING-PAGE/landingpage.html">Trang chủ</a></li>
+            <li class="dropdown">
+              <a href="#!"
+                >Sản phẩm <i class="fas fa-chevron-down icon-menu"></i
+              ></a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a href="../LISTING-PAGE/listing page.html"
+                    >Nguyên phụ liệu</a
+                  >
+                </li>
+                <li>
+                  <a href="../LISTING-PAGE/listing page.html">Đồ trang trí</a>
+                </li>
+                <li>
+                  <a href="../LISTING-PAGE/listing page.html">Thời trang len</a>
+                </li>
+                <li>
+                  <a href="../LISTING-PAGE/listing page.html">Combo tự làm</a>
+                </li>
+                <li>
+                  <a href="../LISTING-PAGE/listing page.html">Sách hướng dẫn</a>
+                </li>
+                <li>
+                  <a href="../LISTING-PAGE/listing page.html">Thú bông len</a>
+                </li>
+              </ul>
+            </li>
+            <li><a href="../INTRO/intro.html">Giới thiệu</a></li>
+            <li><a href="../NEWS/news.html">Tin tức</a></li>
+          </ul>
+        </nav>
+
+        <div class="user-cart">
+          <!-- Search -->
+          <div class="search-box">
+            <form action="" id="search-form">
+              <input type="text" id="search-text" placeholder="Tìm kiếm..." />
+              <button type="submit" id="search-btn">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+          </div>
+
+          <!-- User -->
+          <div class="user-profile">
+            <i class="fas fa-user" id="user-btn"></i>
+            <div class="dropdown-menu user-dropdown">
+              <ul>
+                <li>
+                  <a
+                    href="../UPDATE-ACCOUNT/update_account.html"
+                    id="user-name"
+                  >
+                    <i class="fas fa-user-cog"></i>
+                    <span id="user-name-text">Tài khoản</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="../LOGIN/Login.html" id="login-link">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Đăng nhập
+                  </a>
+                  <a
+                    href="../LOGIN/Logout.php"
+                    id="logout-link"
+                    style="display: none"
+                  >
+                    <i class="fas fa-sign-out-alt"></i>
+                    Đăng xuất
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Cart -->
+          <div class="cart-icon">
+            <i class="fas fa-shopping-cart" id="cart-btn"></i>
+            <div class="cart-count">0</div>
+            <div class="dropdown-menu cart-dropdown">
+              <p id="cart-message">Giỏ hàng của bạn trống.</p>
+              <a href="../LOGIN/Login.html" id="cart-login-link"
+                >Đăng nhập để xem sản phẩm</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <section class="intro-section">
+          <h2>Giới Thiệu Cửa Hàng</h2>
+          <p>
+            Chào mừng bạn đến với <strong>Len Lab </strong> - thiên đường dành
+            cho những người yêu thích đan len và handmade! Chúng tôi chuyên cung
+            cấp các loại len cao cấp, phụ kiện đan móc, cùng những mẫu mã độc
+            đáo để bạn thỏa sức sáng tạo. Với tiêu chí chất lượng và thân thiện
+            với môi trường, mỗi sản phẩm của chúng tôi đều được chọn lọc kỹ
+            lưỡng để mang đến trải nghiệm tuyệt vời nhất cho khách hàng.
+          </p>
+        </section>
+
+        <section class="news-section">
+          <article class="news-article">
+            <img class="article-img" src="img/N.1.png" alt="Bai 1" />
+            <div class="article-content">
+              <h3>Hành trình khởi nghiệp từ sản phẩm handmade</h3>
+              <p>
+                Quyết định bỏ nghề giáo viên, chị Đỗ Thùy Linh (TP Uông Bí,
+                Quảng Ninh) dồn hết tâm huyết khởi nghiệp từ sản phẩm đan móc,
+                tìm hướng đi xuất khẩu, bước đầu mang lại kinh tế ổn định, tạo
+                việc làm cho người yếu thế tại địa phương..
+              </p>
+              <a
+                href="https://diendandoanhnghiep.vn/hanh-trinh-khoi-nghiep-tu-san-pham-handmade-10140771.html"
+                class="read-more"
+                >Đọc tiếp</a
+              >
+            </div>
+          </article>
+
+          <article class="news-article">
+            <img class="article-img" src="img/N2.webp" alt="Bai 2" />
+            <div class="article-content">
+              <h3>
+                Trend chăn hoa len có gì mà cộng đồng yêu handmade phát sốt?
+              </h3>
+              <p>
+                Xuất phát từ một vài video được lan truyền trên TikTok, trào lưu
+                móc chăn thành bó hoa nhanh chóng chiếm sóng cộng đồng mê len
+                sợi. Nhiều bạn không chỉ bắt trend nhanh chóng mà còn tạo ra
+                những sản phẩm chỉn chu, sáng tạo.
+              </p>
+              <a
+                href="https://muctim.tuoitre.vn/trend-chan-hoa-len-co-gi-ma-cong-dong-yeu-handmade-phat-sot-101250412112116072.htm"
+                class="read-more"
+                >Đọc tiếp</a
+              >
+            </div>
+          </article>
+
+          <article class="news-article">
+            <img class="article-img" src="img/N3.jpg" alt="Bai 3" />
+            <div class="article-content">
+              <h3>
+                Thời trang đan móc: Xu hướng thời thượng, thân thiện với Trái
+                đất
+              </h3>
+              <p>
+                Trước sự náo loạn của trào lưu Y2K, phong cách thời trang đan
+                móc khơi gợi cảm hứng của những năm 70 vẫn giữ được sức hấp dẫn
+                riêng của mình. Cùng với tiết giao mùa Thu Đông, xu hướng len
+                đan móc ngày càng được ưa chuộng
+              </p>
+              <a
+                href="https://tienphong.vn/thoi-trang-dan-moc-xu-huong-thoi-thuong-than-thien-voi-trai-dat-post1469626.tpo"
+                class="read-more"
+                >Đọc tiếp</a
+              >
+            </div>
+          </article>
+
+          <article class="news-article">
+            <img class="article-img" src="img/N5.jpg" alt="Bai 5" />
+            <div class="article-content">
+              <h3>Đan móc len sợi, công việc đem lại bình yên trong tâm hồn</h3>
+              <p>
+                Thời đại công nghiệp, sản xuất máy móc đẩy nhanh tốc độ nhưng
+                vẫn có những thị trường ngách cho các sản phẩm thủ công, trong
+                đó gồm cả sản phẩm đan móc len sợi. Và người làm nghề vẫn có
+                phương thức riêng để chinh phục khách hàng.
+              </p>
+              <a
+                href="https://vov2.vov.vn/giao-duc-dao-tao/dan-moc-len-soi-cong-viec-dem-lai-binh-yen-trong-tam-hon-43714.vov2"
+                class="read-more"
+                >Đọc tiếp</a
+              >
+            </div>
+          </article>
+
+          <article class="news-article">
+            <img class="article-img" src="img/N4.jpg" alt="Bai 4" />
+            <div class="article-content">
+              <h3>
+                Là "người chơi hệ handmade", teen đã thử trào lưu đan móc len
+                đầy thú vị này hay chưa?
+              </h3>
+              <p>
+                Mới đây, trào lưu đan móc len đang "làm mưa làm gió" trên mạng
+                xã hội và được nhiều bạn trẻ hưởng ứng. Tuy nhiên không chỉ đơn
+                giản là đan móc áo, mũ... như thời "ông bà anh", giờ đây các bạn
+                Gen Z đã tận dụng khả năng sáng tạo của mình tìm tòi ra nhiều
+                mẫu mới để thực hiện.
+              </p>
+              <a
+                href="https://muctim.tuoitre.vn/la-nguoi-choi-he-handmade-teen-da-thu-trao-luu-dan-moc-len-day-thu-vi-nay-hay-chua-63617.htm"
+                class="read-more"
+                >Đọc tiếp</a
+              >
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+
+    <!-- Toast message cho thông báo đăng nhập -->
+    <div
+      id="login-required-toast"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #f44336;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        z-index: 9999;
+      "
+    >
+      Vui lòng
+      <a
+        href="../LOGIN/Login.html"
+        style="color: #fff; text-decoration: underline"
+        >đăng nhập</a
+      >
+      để xem giỏ hàng!
+    </div>
+    <!-- toast message cho nhập email ở footer -->
+    <div
+      id="email-subscribe-message"
+      style="
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 5px;
+        z-index: 9999;
+      "
+    >
+      Đăng ký thành công!
+    </div>
+
+    <script>
+      $(document).ready(function () {
+        // Cập nhật số lượng giỏ hàng
+        function updateCartCount() {
+          $.get(
+            "../HEADER-FOOTER/Cart_count.php",
+            function (cartResponse) {
+              $(".cart-count").text(cartResponse.item_count);
+            },
+            "json"
+          ).fail(function () {
+            $("#cart-count").text("0");
+          });
+        }
+
+        // Kiểm tra trạng thái đăng nhập
+        $.get(
+          "../LOGIN/Check_login.php",
+          function (response) {
+            if (response.is_logged_in) {
+              $("#user-name-text").text(response.user_name);
+              $("#logout-link").show();
+              $("#login-link").hide();
+              updateCartCount(); // Cập nhật số lượng giỏ hàng khi đã đăng nhập
+            } else {
+              $("#logout-link").hide();
+              $("#login-link").show();
+              $("#cart-count").text("0");
+            }
+          },
+          "json"
+        );
+
+        // Xử lý khi nhấn vào biểu tượng giỏ hàng
+        $("#cart-btn").on("click", function (e) {
+          e.preventDefault();
+          $.get(
+            "../LOGIN/Check_login.php",
+            function (response) {
+              if (response.is_logged_in) {
+                window.location.href = "../CART/cart.html"; // Chuyển đến trang giỏ hàng
+              } else {
+                $("#login-required-toast").fadeIn(300).delay(3000).fadeOut(300); // Hiển thị thông báo yêu cầu đăng nhập
+              }
+            },
+            "json"
+          );
+        });
+
+        // Xử lý tìm kiếm
+        $("#search-form").on("submit", function (e) {
+          e.preventDefault();
+          const keyword = $("#search-text").val().trim();
+          if (keyword) {
+            window.location.href = `../LISTING-PAGE/listing page.html?search=${encodeURIComponent(
+              keyword
+            )}`;
+          }
+        });
+
+        // Xử lý gửi email đăng ký ở footer
+        $("#subscribe-form").on("submit", function (e) {
+          e.preventDefault();
+          const $emailInput = $("#subscribe-email");
+          // Hiển thị thông báo
+          $("#email-subscribe-message").fadeIn(300).delay(1500).fadeOut(300);
+          // Reset input sau khi gửi
+          $emailInput.val("");
+        });
+      });
+    </script>
+
+    <footer class="footer-container">
+      <div class="footer">
+        <!-- PHẦN ĐẦU -->
+        <div class="footer-top">
+          <div class="footer-cta">
+            <h2>THAM GIA LENLAB CLUB VÀ NHẬN GIẢM GIÁ 15%</h2>
+            <p>Đăng ký miễn phí và gia nhập cộng đồng ngay hôm nay!</p>
+            <form>
+              <input type="email" placeholder="Địa chỉ Email" required />
+              <button type="submit">Gửi</button>
+            </form>
+          </div>
+          <div class="footer-logo-top">LEN LAB</div>
+        </div>
+
+        <!-- NỘI DUNG CHÍNH -->
+        <div class="row">
+          <div class="col">
+            <h3>Về chúng tôi</h3>
+            <p>
+              Chúng tôi cung cấp sản phẩm len chất lượng cao, mềm mại và bền
+              vững, mang lại sự ấm áp và an toàn cho người sử dụng.
+            </p>
+            <div class="about-us">
+              <p>
+                <i class="fas fa-map-marker-alt"></i> Hàn Thuyên, khu phố 6 P,
+                Thủ Đức, Hồ Chí Minh
+              </p>
+              <p><i class="fas fa-envelope"></i> lenlab.vn@gmail.com</p>
+              <p><i class="fas fa-phone"></i> 098 1234 5678</p>
+            </div>
+          </div>
+          <div class="col">
+            <h3>Danh mục</h3>
+            <ul>
+              <li>
+                <a href="../LISTING-PAGE/listing page.html">Nguyên phụ liệu</a>
+              </li>
+              <li>
+                <a href="../LISTING-PAGE/listing page.html">Đồ trang trí</a>
+              </li>
+              <li>
+                <a href="../LISTING-PAGE/listing page.html">Thời trang len</a>
+              </li>
+              <li>
+                <a href="../LISTING-PAGE/listing page.html">Combo tự làm</a>
+              </li>
+              <li>
+                <a href="../LISTING-PAGE/listing page.html">Sách hướng dẫn</a>
+              </li>
+              <li>
+                <a href="../LISTING-PAGE/listing page.html">Thú bông len</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Chính sách</h3>
+            <ul>
+              <li><a href="../POLICY/policy.html">Chính sách mua hàng</a></li>
+            </ul>
+          </div>
+          <div class="col">
+            <h3>Theo dõi</h3>
+            <div class="social-icons">
+              <a
+                href="https://www.facebook.com/profile.php?id=61575666167762&sk=about"
+                target="_blank"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </a>
+
+              <a href="https://www.tiktok.com/@lenlabshop" target="_blank">
+                <i class="fab fa-tiktok"></i>
+              </a>
+
+              <a
+                href="https://www.instagram.com/lenlab.vn?igsh=NG5wOGQyNDZoN3No"
+                target="_blank"
+              >
+                <i class="fab fa-instagram"></i>
+              </a>
+
+              <a href="https://www.youtube.com/@LenLabShop" target="_blank">
+                <i class="fab fa-youtube"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <hr />
+        <p class="copyright">© 2025 LEN LAB. All rights reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      $(document).ready(function () {
+        // Chỉ áp dụng dropdown cho mục Sản phẩm
+        $(".dropdown:first > a").click(function (e) {
+          e.preventDefault();
+          var $dropdownMenu = $(this).next(".dropdown-menu");
+
+          $(".dropdown-menu").not($dropdownMenu).slideUp();
+          $dropdownMenu.stop(true, true).slideToggle();
+          $(this)
+            .find(".icon-menu")
+            .toggleClass("fa-chevron-down fa-chevron-right");
+        });
+
+        // Đảm bảo rằng dropdown đóng lại khi click ra ngoài
+        $(document).click(function (e) {
+          if (!$(e.target).closest(".dropdown").length) {
+            $(".dropdown-menu").slideUp();
+            $(".icon-menu")
+              .removeClass("fa-chevron-right")
+              .addClass("fa-chevron-down");
+          }
+        });
+
+        // Toggle user profile dropdown
+        $("#user-btn").click(function (e) {
+          e.stopPropagation(); // Prevent closing the dropdown when clicking on the user profile button
+          $(".user-dropdown").stop(true, true).slideToggle();
+        });
+
+        // Close dropdown when clicking outside
+        $(document).click(function (e) {
+          if (!$(e.target).closest(".user-profile").length) {
+            $(".user-dropdown").slideUp();
+          }
+        });
+      });
+
+      // Đảm bảo rằng DOM đã sẵn sàng
+      document.addEventListener("DOMContentLoaded", function () {
+        // Chuyển đến trang checkout khi bấm "Mua ngay"
+        document
+          .querySelector(".buy-now")
+          .addEventListener("click", function () {
+            window.location.href = "checkout.html"; // Đảm bảo đường dẫn đúng
+          });
+
+        // Animation cho bài viết
+        $(window)
+          .scroll(function () {
+            $(".news-article").each(function () {
+              var articlePosition = $(this).offset().top;
+              var scrollPosition = $(window).scrollTop() + $(window).height();
+
+              if (scrollPosition > articlePosition) {
+                $(this).css({
+                  opacity: "1",
+                  transform: "translateY(0)",
+                });
+              }
+            });
+          })
+          .trigger("scroll");
+
+        // Hiệu ứng hover cho bài viết
+        $(".news-article").hover(
+          function () {
+            $(this).find(".article-img").css("transform", "scale(1.05)");
+          },
+          function () {
+            $(this).find(".article-img").css("transform", "scale(1)");
+          }
+        );
+      });
+    </script>
+  </body>
+</html>

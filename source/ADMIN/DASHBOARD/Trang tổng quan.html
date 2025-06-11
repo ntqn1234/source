@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Bảng điều khiển | Quản trị Admin</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="../main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css"
+    />
+  </head>
+  <body onload="time()" class="app sidebar-mini rtl">
+    <!-- Navbar-->
+    <header class="app-header">
+      <a
+        class="app-sidebar__toggle"
+        href="#"
+        data-toggle="sidebar"
+        aria-label="Hide Sidebar"
+      ></a>
+      <ul class="app-nav">
+        <li>
+          <a class="app-nav__item" href="../../LOGIN/Logout.php"
+            ><i class="bx bx-log-out bx-rotate-180"></i
+          ></a>
+        </li>
+      </ul>
+    </header>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+      <div class="app-sidebar__user">
+        <div>
+          <p class="app-sidebar__user-name"><b>Quản lý LenLab</b></p>
+          <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
+        </div>
+      </div>
+      <hr />
+      <ul class="app-menu">
+        <li>
+          <a class="app-menu__item haha" href=""
+            ><i class="app-menu__icon bx bx-tachometer"></i
+            ><span class="app-menu__label">Bảng điều khiển</span></a
+          >
+        </li>
+        <li>
+          <a class="app-menu__item" href="../manage product.html"
+            ><i class="app-menu__icon bx bx-purchase-tag-alt"></i
+            ><span class="app-menu__label">Quản lý sản phẩm</span></a
+          >
+        </li>
+        <li>
+          <a
+            class="app-menu__item"
+            href="../MANAGE-CUSTOMER/manage customer.html"
+            ><i class="app-menu__icon bx bx-id-card"></i
+            ><span class="app-menu__label">Quản lý khách hàng</span></a
+          >
+        </li>
+        <li>
+          <a class="app-menu__item" href="../MANAGE-ORDER/ManageOrder.html"
+            ><i class="app-menu__icon bx bx-task"></i
+            ><span class="app-menu__label">Quản lý đơn hàng</span></a
+          >
+        </li>
+      </ul>
+    </aside>
+    <!-- /Sidebar menu-->
+    <main class="app-content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb">
+              <li class="breadcrumb-item">
+                <a href=""><b>Bảng điều khiển</b></a>
+              </li>
+            </ul>
+            <div id="clock"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!--Left-->
+        <div class="col-md-12 col-lg-6">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="widget-small primary coloured-icon">
+                <i class="icon bx bxs-user-account fa-3x"></i>
+                <div class="info">
+                  <h4>Tổng khách hàng</h4>
+                  <p><b id="customer-count">Đang tải...</b></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="widget-small info coloured-icon">
+                <i class="icon bx bxs-data fa-3x"></i>
+                <div class="info">
+                  <h4>Tổng sản phẩm quản lý</h4>
+                  <p><b id="product-count">Đang tải...</b></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="widget-small warning coloured-icon">
+                <i class="icon bx bxs-shopping-bags fa-3x"></i>
+                <div class="info">
+                  <h4>Tổng đơn hàng</h4>
+                  <p><b id="order-count">Đang tải...</b></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="widget-small danger coloured-icon">
+                <i class="icon bx bxs-error-alt fa-3x"></i>
+                <div class="info">
+                  <h4>Đơn hàng chờ xử lý</h4>
+                  <p><b id="pending-order-count">Đang tải...</b></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="tile">
+                <h3 class="tile-title">Tình trạng đơn hàng</h3>
+                <div>
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th>ID đơn hàng</th>
+                        <th>Tên khách hàng</th>
+                        <th>Trạng thái</th>
+                        <th>Tổng tiền</th>
+                      </tr>
+                    </thead>
+                    <tbody id="recent-orders-body">
+                      <tr>
+                        <td colspan="4">Đang tải...</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--END left-->
+        <div class="col-md-12 col-lg-6">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="tile">
+                <h3 class="tile-title">Tổng doanh thu</h3>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <canvas
+                    class="embed-responsive-item"
+                    id="lineChartDemo"
+                  ></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="tile">
+                <h3 class="tile-title">Dữ liệu thu chi</h3>
+                <div class="embed-responsive embed-responsive-16by9">
+                  <canvas
+                    class="embed-responsive-item"
+                    id="barChartDemo"
+                  ></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--END right-->
+      </div>
+    </main>
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="https://unpkg.com/boxicons@latest/dist/boxicons.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/plugins/pace.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      // Biểu đồ tổng doanh thu (line chart)
+      $(document).ready(function () {
+        // Tổng doanh thu theo tháng
+        $.get(
+          "Dashboard.php",
+          { action: "getRevenueByMonth" },
+          function (res) {
+            let labels = [];
+            let data = [];
+            if (res.data && res.data.length > 0) {
+              res.data.forEach(function (row) {
+                labels.push(row.month);
+                data.push(Number(row.revenue));
+              });
+            }
+            var ctxl = document
+              .getElementById("lineChartDemo")
+              .getContext("2d");
+            new Chart(ctxl, {
+              type: "line",
+              data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: "Doanh thu",
+                    backgroundColor: "rgba(255, 213, 59, 0.767)",
+                    borderColor: "rgb(255, 212, 59)",
+                    data: data,
+                    fill: true,
+                  },
+                ],
+              },
+              options: { responsive: true, maintainAspectRatio: false },
+            });
+          },
+          "json"
+        );
+
+        // Biểu đồ thu chi (bar chart)
+        $.get(
+          "Dashboard.php",
+          { action: "getIncomeExpenseByMonth" },
+          function (res) {
+            let labels = [];
+            let income = [];
+            let expense = [];
+            if (res.data && res.data.length > 0) {
+              res.data.forEach(function (row) {
+                labels.push(row.month);
+                income.push(Number(row.income));
+                expense.push(Number(row.expense));
+              });
+            }
+            var ctxb = document.getElementById("barChartDemo").getContext("2d");
+            new Chart(ctxb, {
+              type: "bar",
+              data: {
+                labels: labels,
+                datasets: [
+                  {
+                    label: "Thu",
+                    backgroundColor: "rgba(9, 109, 239, 0.651)",
+                    data: income,
+                  },
+                  {
+                    label: "Chi",
+                    backgroundColor: "rgba(255, 99, 132, 0.7)",
+                    data: expense,
+                  },
+                ],
+              },
+              options: { responsive: true, maintainAspectRatio: false },
+            });
+          },
+          "json"
+        );
+
+        // Lấy số lượng khách hàng
+        $.get(
+          "Dashboard.php",
+          { action: "getCustomerCount" },
+          function (res) {
+            $("#customer-count").text(res.total + " khách hàng");
+          },
+          "json"
+        );
+
+        // Lấy số lượng sản phẩm
+        $.get(
+          "Dashboard.php",
+          { action: "getProductCount" },
+          function (res) {
+            $("#product-count").text(res.total + " sản phẩm");
+          },
+          "json"
+        );
+
+        // Tổng đơn hàng
+        $.get(
+          "Dashboard.php",
+          { action: "getOrderCount" },
+          function (res) {
+            $("#order-count").text(res.total + " đơn hàng");
+          },
+          "json"
+        );
+
+        // Đơn hàng chờ xử lý
+        $.get(
+          "Dashboard.php",
+          { action: "getPendingOrderCount" },
+          function (res) {
+            $("#pending-order-count").text(res.total + " đơn hàng");
+          },
+          "json"
+        );
+
+        // 5 đơn hàng mới nhất
+        $.get(
+          "Dashboard.php",
+          { action: "getRecentOrders" },
+          function (res) {
+            let html = "";
+            if (res.orders && res.orders.length > 0) {
+              res.orders.forEach(function (order) {
+                let statusClass = "bg-info";
+                let statusText = "Chờ xử lý";
+                if (order.status === "pending") {
+                  statusClass = "bg-info";
+                  statusText = "Chờ xử lý";
+                } else if (order.status === "shipping") {
+                  statusClass = "bg-warning";
+                  statusText = "Đang vận chuyển";
+                } else if (order.status === "completed") {
+                  statusClass = "bg-success";
+                  statusText = "Đã hoàn thành";
+                } else if (order.status === "cancelled") {
+                  statusClass = "bg-danger";
+                  statusText = "Đã hủy";
+                } else {
+                  statusClass = "bg-secondary";
+                  statusText = order.status;
+                }
+                html += `
+                  <tr>
+                    <td>${order.order_id}</td>
+                    <td>${order.full_name}</td>
+                    <td><span class="badge ${statusClass}">${statusText}</span></td>
+                    <td>${Number(order.total_amount).toLocaleString()} đ</td>
+                  </tr>
+                `;
+              });
+            } else {
+              html = `<tr><td colspan="4">Không có đơn hàng nào</td></tr>`;
+            }
+            $("#recent-orders-body").html(html);
+          },
+          "json"
+        );
+
+        // Khi nhấn vào widget "Tổng khách hàng" thì chuyển trang
+        $(".widget-small.primary")
+          .css("cursor", "pointer")
+          .click(function () {
+            window.location.href = "../MANAGE-CUSTOMER/manage customer.html";
+          });
+
+        // Khi nhấn vào widget "Tổng sản phẩm quản lý" thì chuyển trang
+        $(".widget-small.info")
+          .css("cursor", "pointer")
+          .click(function () {
+            window.location.href = "../manage product.html";
+          });
+
+        // Khi nhấn vào widget "Tổng đơn hàng" thì chuyển trang
+        $(".widget-small.warning")
+          .css("cursor", "pointer")
+          .click(function () {
+            window.location.href = "../MANAGE-ORDER/ManageOrder.html";
+          });
+
+        // Khi nhấn vào widget "Đơn hàng chờ xử lý" thì chuyển trang với filter trạng thái pending
+        $(".widget-small.danger")
+          .css("cursor", "pointer")
+          .click(function () {
+            window.location.href =
+              "../MANAGE-ORDER/ManageOrder.html?status=pending";
+          });
+      });
+
+      // Thời Gian
+      function time() {
+        var today = new Date();
+        var weekday = [
+          "Chủ Nhật",
+          "Thứ Hai",
+          "Thứ Ba",
+          "Thứ Tư",
+          "Thứ Năm",
+          "Thứ Sáu",
+          "Thứ Bảy",
+        ];
+        var day = weekday[today.getDay()];
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        nowTime = h + " giờ " + m + " phút " + s + " giây";
+        if (dd < 10) dd = "0" + dd;
+        if (mm < 10) mm = "0" + mm;
+        today = day + ", " + dd + "/" + mm + "/" + yyyy;
+        tmp = '<span class="date"> ' + today + " - " + nowTime + "</span>";
+        document.getElementById("clock").innerHTML = tmp;
+        setTimeout(time, 1000);
+        function checkTime(i) {
+          return i < 10 ? "0" + i : i;
+        }
+      }
+    </script>
+  </body>
+</html>

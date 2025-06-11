@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="update_account.css" />
+    <link rel="stylesheet" href="../HEADER-FOOTER/Footer.css" />
+    <link rel="stylesheet" href="../HEADER-FOOTER/Header.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css"
+    />
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <title>REGISTER</title>
+  </head>
+  <body>
+    <div class="container-fluid cart-container">
+      <div id="header-placeholder"></div>
+      <script>
+        $(function () {
+          $("#header-placeholder").load("../HEADER-FOOTER/Header.html");
+          $("#footer-placeholder").load("../HEADER-FOOTER/Footer.html");
+        });
+      </script>
+
+      <div
+        id="update-message"
+        style="
+          color: #167104;
+          font-weight: bold;
+          display: none;
+          text-align: center;
+          margin-top: 20px;
+        "
+      >
+        Cập nhật thông tin thành công!
+      </div>
+
+      <section class="login-section">
+        <div class="container">
+          <div class="login-box">
+            <h2>Thông tin tài khoản</h2>
+            <form id="update-account-form">
+              <label>Tên của bạn</label>
+              <input
+                type="text"
+                id="user-name"
+                name="user-name"
+                class="form-control"
+                placeholder="Nhập họ và tên..."
+                required
+              />
+              <label>Giới tính</label>
+              <div class="gender-options">
+                <label
+                  ><input type="radio" name="gender" value="male" required />
+                  Nam</label
+                >
+                <label
+                  ><input type="radio" name="gender" value="female" /> Nữ</label
+                >
+                <label
+                  ><input type="radio" name="gender" value="other" />
+                  Khác</label
+                >
+              </div>
+
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="user-email"
+                name="user-email"
+                class="form-control"
+                placeholder="Email"
+                required
+              />
+              <label for="password">Mật khẩu</label>
+              <div class="password-wrapper">
+                <input
+                  type="password"
+                  id="user-password"
+                  name="user-password"
+                  class="form-control"
+                  placeholder="Nhập mật khẩu..."
+                  required
+                />
+                <i id="toggle-password" class="fa-solid fa-eye"></i>
+              </div>
+              <button type="submit" class="login-btn">CẬP NHẬT</button>
+            </form>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!--Giao diện làm việc-->
+    <main class="app-content">
+      <!-- Thanh danh sách đơn hàng-->
+      <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+          <li class="breadcrumb-item active">
+            <a><b>Danh sách đơn hàng</b></a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-md-12">
+        <div class="tile">
+          <div class="tile-body">
+            <div class="row element-button">
+              <table
+                class="table table-hover table-bordered custom-order-table"
+                id="orderTable"
+              >
+                <thead>
+                  <tr>
+                    <th>ID đơn hàng</th>
+                    <th>Người nhận</th>
+                    <th>Thời gian đặt</th>
+                    <th>Tổng tiền</th>
+                    <th>Tình trạng</th>
+                  </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                  <!-- Dữ liệu sẽ được load ở đây -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+      $(document).ready(function () {
+        // Lấy thông tin tài khoản khi trang tải
+        $.ajax({
+          url: "update_account.php",
+          type: "GET",
+          dataType: "json",
+          success: function (response) {
+            if (response.status === "success") {
+              // Điền thông tin vào form
+              $("#user-name").val(response.data.name);
+              $(
+                'input[name="gender"][value="' + response.data.gender + '"]'
+              ).prop("checked", true);
+              $("#user-email").val(response.data.email);
+              $("#user-password").val(response.data.password);
+            } else {
+              alert(response.message);
+              window.location.href = "../LOGIN/login.html";
+            }
+          },
+          error: function () {
+            alert("Đã xảy ra lỗi khi lấy thông tin tài khoản!");
+          },
+        });
+
+        // Xử lý submit form cập nhật
+        $("#update-account-form").submit(function (e) {
+          e.preventDefault();
+          $.ajax({
+            url: "update_account.php",
+            type: "POST",
+            data: $(this).serialize(),
+            dataType: "json",
+            success: function (response) {
+              if (response.status === "success") {
+                $("#update-message").fadeIn(300).delay(2000).fadeOut(300);
+              } else {
+                alert(response.message);
+                window.location.href = "../LOGIN/login.html";
+              }
+            },
+            error: function () {
+              alert("Đã xảy ra lỗi khi cập nhật thông tin!");
+            },
+          });
+        });
+
+        // Hiện/ẩn mật khẩu
+        $("#toggle-password").click(function () {
+          const input = $("#user-password");
+          const icon = $(this);
+          if (input.attr("type") === "password") {
+            input.attr("type", "text");
+            icon.removeClass("fa-eye").addClass("fa-eye-slash");
+          } else {
+            input.attr("type", "password");
+            icon.removeClass("fa-eye-slash").addClass("fa-eye");
+          }
+        });
+
+        // Lấy danh sách đơn hàng
+        function loadOrders() {
+          if ($.fn.DataTable.isDataTable("#orderTable")) {
+            $("#orderTable").DataTable().destroy();
+          }
+          $.get(
+            "update_account.php?action=get_orders",
+            function (response) {
+              let html = "";
+              if (response.success && response.data.length > 0) {
+                response.data.forEach(function (order) {
+                  const statusMap = {
+                    pending: { class: "badge-warning", text: "Chờ duyệt" },
+                    processing: { class: "badge-primary", text: "Đang xử lý" },
+                    shipped: { class: "badge-info", text: "Đang giao hàng" },
+                    delivered: { class: "badge-success", text: "Hoàn thành" },
+                    cancelled: { class: "badge-danger", text: "Đã huỷ" },
+                  };
+                  const status = statusMap[order.status] || {
+                    class: "badge-secondary",
+                    text: order.status,
+                  };
+                  html += `
+                    <tr>
+                      <td><a href="Orderdetail.html?id=${order.id}">${
+                    order.order_code
+                  }</a></td>
+                      <td>${order.customer_name}</td>
+                      <td>${order.order_date}</td>
+                      <td>${Number(order.total).toLocaleString("vi-VN")} đ</td>
+                      <td><span class="badge ${status.class}">${
+                    status.text
+                  }</span></td>
+                    </tr>
+                  `;
+                });
+              } else {
+                html = '<tr><td colspan="5">Không có dữ liệu</td></tr>';
+              }
+              $("#orderTableBody").html(html);
+              $("#orderTable").DataTable({
+                language: {
+                  url: "//cdn.datatables.net/plug-ins/1.13.4/i18n/vi.json", // Ngôn ngữ tiếng Việt
+                },
+                searching: false, // Tắt ô tìm kiếm
+                lengthChange: false, // Tắt menu chọn số hàng
+                info: false, // Tắt thông tin phân trang
+                pageLength: 5, // Mặc định 5 hàng mỗi trang
+                paging: false, // Giữ phân trang nếu cần
+              });
+            },
+            "json"
+          ).fail(function () {
+            $("#orderTableBody").html(
+              '<tr><td colspan="5">Lỗi khi tải dữ liệu</td></tr>'
+            );
+          });
+        }
+        loadOrders();
+      });
+    </script>
+  </body>
+</html>

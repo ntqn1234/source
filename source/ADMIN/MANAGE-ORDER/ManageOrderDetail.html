@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Chi tiết đơn hàng | Quản trị Admin</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="../main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+    <!-- or -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <!-- Font-icon css-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css"
+    />
+  </head>
+
+  <body onload="time()" class="app sidebar-mini rtl">
+    <!-- Navbar-->
+    <header class="app-header">
+      <!-- Sidebar toggle button--><a
+        class="app-sidebar__toggle"
+        href="#"
+        data-toggle="sidebar"
+        aria-label="Hide Sidebar"
+      ></a>
+      <!-- Navbar Right Menu-->
+      <ul class="app-nav">
+        <!-- User Menu-->
+        <li>
+          <a class="app-nav__item" href="../../LOGIN/Logout.php"
+            ><i class="bx bx-log-out bx-rotate-180"></i>
+          </a>
+        </li>
+      </ul>
+    </header>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+      <div class="app-sidebar__user">
+        <div>
+          <p class="app-sidebar__user-name"><b>Quản lý LenLab</b></p>
+          <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
+        </div>
+      </div>
+      <hr />
+      <ul class="app-menu">
+        <li>
+          <a class="app-menu__item" href="../DASHBOARD/Trang tổng quan.html"
+            ><i class="app-menu__icon bx bx-tachometer"></i
+            ><span class="app-menu__label">Bảng điều khiển</span></a
+          >
+        </li>
+        <li>
+          <a class="app-menu__item" href="../manage product.html"
+            ><i class="app-menu__icon bx bx-purchase-tag-alt"></i
+            ><span class="app-menu__label">Quản lý sản phẩm</span></a
+          >
+        </li>
+        <li>
+          <a
+            class="app-menu__item"
+            href="../MANAGE-CUSTOMER/manage customer.html"
+            ><i class="app-menu__icon bx bx-id-card"></i>
+            <span class="app-menu__label">Quản lý khách hàng</span></a
+          >
+        </li>
+
+        <li>
+          <a class="app-menu__item haha" href="../MANAGE-ORDER/ManageOrder.html"
+            ><i class="app-menu__icon bx bx-task"></i
+            ><span class="app-menu__label">Quản lý đơn hàng</span></a
+          >
+        </li>
+      </ul>
+    </aside>
+
+    <!--Giao diện làm việc-->
+    <main class="app-content">
+      <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+          <li class="breadcrumb-item active">
+            <a><b>Thông tin chi tiết đơn hàng: <span id="order-code" style="color:#007bff"></span></b></a>
+            
+            <!--Thêm mã đơn hàng-->
+          </li>
+        </ul>
+        <div id="clock"></div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tile">
+            <div class="tile-body">
+              <div class="row element-button">
+                <div class="col-sm-2">
+                  <a
+                    class="btn btn-sm print-file"
+                    type="button"
+                    title="In"
+                    onclick="myApp.printTable()"
+                    ><i class="fas fa-print"></i> In dữ liệu</a>
+                </div>
+
+                 <div class="col-sm-2">
+                  <a class="btn trash btn-sm" type="button" title="Xóa"><i class="fas fa-trash-alt"></i> Xóa dữ liệu</a>
+
+                </div>
+              
+                <div class="col-sm-2">
+                  <a
+                    class="btn btn-primary btn-sm edit"
+                    type="button"
+                    title="Sửa"
+                    ><i class="fa fa-edit"></i> Sửa dữ liệu</a
+                  >
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-success btn-sm btn-save-edit" type="button" style="display:none;">
+                    <i class="fa fa-save"></i> Lưu thay đổi
+                  </button>
+                </div>
+                <div class="col-sm-2">
+                  <button class="btn btn-secondary btn-sm btn-cancel-edit" type="button" style="display:none;">
+                    <i class="fa fa-times"></i> Hủy
+                  </button>
+                </div>
+              </div>
+              <table class="table table-hover table-bordered" id="sampleTable">
+                <thead>
+                  <tr>
+                    <th>Người nhận</th>
+                    <th>Số điện thoại</th>
+                    <th>Email</th>
+                    <th>Địa chỉ giao hàng</th>
+                    <th>Phương thức thanh toán</th>
+                    <th>Tình trạng</th>
+                  </tr>
+                </thead>
+                <!--Hiển thị bảng tổng quan đơn hàng-->
+                <tbody id="orderTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+          </div>
+          <div class="col-md-12">
+                  <!--Hiển thị tóm tắt đơn hàng-->
+                  <div id="summary-details"></div>
+                  <!--Hiển thị chi tiết đơn hàng-->
+                  <div id="order-products"></div> 
+                </div>
+            
+      </div>
+    </main>
+  </body>
+</html>
+
+
+    <!-- jQuery và Bootstrap JS -->
+    <!-- Thêm jQuery CDN trước tất cả các script khác -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- jQuery Confirm -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+      $("#orderTable").DataTable();
+    </script>
+
+    <!-- script chính xử lý các thao tác -->
+    <script>
+      //Thời Gian
+      function time() {
+        var today = new Date();
+        var weekday = new Array(7);
+        weekday[0] = "Chủ Nhật";
+        weekday[1] = "Thứ Hai";
+        weekday[2] = "Thứ Ba";
+        weekday[3] = "Thứ Tư";
+        weekday[4] = "Thứ Năm";
+        weekday[5] = "Thứ Sáu";
+        weekday[6] = "Thứ Bảy";
+        var day = weekday[today.getDay()];
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        nowTime = h + " giờ " + m + " phút " + s + " giây";
+        if (dd < 10) {
+          dd = "0" + dd;
+        }
+        if (mm < 10) {
+          mm = "0" + mm;
+        }
+        today = day + ", " + dd + "/" + mm + "/" + yyyy;
+        tmp = '<span class="date"> ' + today + " - " + nowTime + "</span>";
+        document.getElementById("clock").innerHTML = tmp;
+        clocktime = setTimeout("time()", "1000", "Javascript");
+
+        function checkTime(i) {
+          if (i < 10) {
+            i = "0" + i;
+          }
+          return i;
+        }
+      }
+    </script>
+  </body>
+  <script>
+      function formatPrice(price) {
+      return Number(price).toLocaleString("vi-VN") + " đ";
+  }
+  
+  function getOrderIdFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('id');
+  }
+  
+  function enableEditing(order) {
+    let html = `
+  <tr>
+    <td style="vertical-align: middle;">
+      <input type="text" class="form-control form-control-sm" id="edit-fullname"
+             value="${order.full_name || ''}" placeholder="Họ tên khách hàng">
+    </td>
+    <td style="vertical-align: middle;">
+      <input type="text" class="form-control form-control-sm" id="edit-phone"
+             value="${order.phone || ''}" placeholder="Số điện thoại">
+    </td>
+    <td style="vertical-align: middle;">
+      <input type="email" class="form-control form-control-sm" id="edit-email"
+             value="${order.email || ''}" placeholder="Email">
+    </td>
+    <td style="vertical-align: middle;">
+      <input type="text" class="form-control form-control-sm mb-1" id="edit-specific-address"
+             value="${order.specific_address || ''}" placeholder="Số nhà, tên đường">
+      <input type="text" class="form-control form-control-sm mb-1" id="edit-district"
+             value="${order.district || ''}" placeholder="Quận/Huyện">
+      <input type="text" class="form-control form-control-sm" id="edit-province"
+             value="${order.province || ''}" placeholder="Tỉnh/Thành phố">
+    </td>
+    <td style="vertical-align: middle;">
+      <select class="form-select form-select-sm" id="edit-payment-method">
+        <option value="cod" ${order.payment_method === "cod" ? "selected" : ""}>COD</option>
+        <option value="bank_transfer" ${order.payment_method === "bank_transfer" ? "selected" : ""}>Chuyển khoản</option>
+      </select>
+    </td>
+    <td style="vertical-align: middle;">
+      <select class="form-select form-select-sm" id="edit-status">
+        <option value="pending" ${order.status === "pending" ? "selected" : ""}>Chờ duyệt</option>
+        <option value="processing" ${order.status === "processing" ? "selected" : ""}>Đang xử lý</option>
+        <option value="shipped" ${order.status === "shipped" ? "selected" : ""}>Đang giao hàng</option>
+        <option value="delivered" ${order.status === "delivered" ? "selected" : ""}>Hoàn thành</option>
+        <option value="cancelled" ${order.status === "cancelled" ? "selected" : ""}>Đã hủy</option>
+      </select>
+    </td>
+  </tr>
+`;
+    $("#orderTableBody").html(html);
+    
+  }
+
+    // Hiển thị chi tiết đơn hàng
+    $(document).ready(function () {
+
+  function loadOrderDetail() {
+    const orderId = getOrderIdFromUrl();
+    if (!orderId) {
+      $("#orderTableBody").html('<tr><td colspan="5">Không tìm thấy mã đơn hàng</td></tr>');
+      $("#order-code").text("");
+      return;
+    }
+    $.get(
+      "ManageOrderDetail.php",
+      { action: "get_order_detail", order_id: orderId },
+      function (response) {
+        if (response.success && response.order) {
+          // Hiển thị mã đơn hàng
+        $("#order-code").text(response.order.order_id || orderId);
+          // Thông tin đơn hàng
+          let order = response.order;
+          let addressContent = `
+        <p>${order.specific_address || ""}</p>
+        <p>Quận/Huyện: ${order.district || ""}</p>
+        <p>Tỉnh/Thành phố: ${order.province || ""}</p>
+      `;
+          let html = `
+            <tr>
+              <td>${order.full_name || ""}</td>
+              <td>${order.phone || ""}</td>
+              <td>${order.email || ""}</td>
+              <td>${addressContent || ""}</td>
+              <td>${order.payment_method || ""}</td>
+              <td>${order.status || ""}</td>
+            </tr>
+          `;
+          $("#orderTableBody").html(html);
+
+          // Chi tiết đơn hàng
+          let shippingFee = Number(order.shipping_fee);
+          if (order.shipping_method === "store") {
+              shippingFee = 0;
+          }
+          let finalTotal = Number(order.total_amount) + shippingFee - Number(order.discount_amount);
+          let summaryHtml = `
+            <div id="summary-details" style="margin-top:24px;">
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span>Giá sản phẩm</span><span>${formatPrice(order.total_amount)}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span>Phí vận chuyển</span><span>${formatPrice(order.shipping_fee)}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span>Phương thức giao hàng</span><span>${order.shipping_method === "store" ? "Nhận tại cửa hàng" : "Giao hàng tiêu chuẩn"}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span>Giảm giá</span><span>${formatPrice(order.discount_amount)}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span>Ghi chú</span><span>${order.order_note && order.order_note.trim() !== "" ? order.order_note : "-"}</span>
+              </div>
+              <div style="display: flex; justify-content: space-between; font-weight: 700;">
+                  <span>Thành tiền</span><span>${formatPrice(finalTotal)}</span>
+              </div>
+              <div style="border-bottom: 1px solid #eee; margin-top: 15px;"></div><br>
+            </div>
+          `;
+          $("#summary-details").html(summaryHtml)
+          
+          // Danh sách sản phẩm
+          let productsHtml = `
+          <div class="section-title" style="font-weight:700;font-size:18px;">Chi tiết đơn hàng</div>
+          <div>
+        `;
+          if (response.items && response.items.length > 0) {
+            response.items.forEach(function(item) {
+              let imgSrc = '../' + (item.variant_image || item.product_image || 'default.jpg');
+              productsHtml += `
+              <div class="row align-items-center mb-3 px-3 py-3" style="background: #F5D28E; border-radius: 12px;">
+              <div class="col-md-2 col-4 text-center">
+                <img src="${imgSrc}" alt="${item.product_name}" class="img-fluid rounded" style="width: 90px; height: 90px; object-fit: cover;">
+              </div>
+
+              <div class="col-md-8 col-8">
+                <div class="fw-bold" style="font-size: 16px; margin-bottom: 4px;">${item.product_name || ""}</div>
+                <div class="text-muted" style="font-size: 14px; margin-bottom: 4px;">${item.category_name || ""}</div>
+                <div style="font-size: 14px; margin-bottom: 4px;">
+                  <span>Màu sắc: ${item.color || "-"}</span> |
+                  <span>Kích thước: ${item.size || "-"}</span>
+                </div>
+                <div style="font-size: 14px;">Số lượng: <span class="fw-bold">${item.quantity || 1}</span></div>
+              </div>
+
+              <div class="col-md-2 col-12 text-md-end text-start mt-3 mt-md-0" style="font-size: 18px; font-weight: 600; color: #222;">
+                ${formatPrice(Number(item.price) * Number(item.quantity))}
+              </div>
+            </div>
+              `;
+            });
+          } else {
+            productsHtml += `<div>Không có sản phẩm nào trong đơn hàng này.</div>`;
+          }
+          productsHtml += `</div>`;
+          $("#order-products").html(productsHtml);
+         } else {
+          $("#orderTableBody").html('<tr><td colspan="5">Không có dữ liệu</td></tr>');
+          $("#order-products").html("");
+          $("#summary-details").html("");
+        }
+      },
+      "json"
+    ).fail(function () {
+      $("#orderTableBody").html('<tr><td colspan="5">Lỗi khi tải dữ liệu</td></tr>');
+      $("#order-products").html("");
+      $("#summary-details").html("");
+    });
+  }
+  loadOrderDetail();
+});
+
+    //Xử lý sự kiện click nút sửa
+    $(document).on("click", ".edit", function () {
+      var orderId = getOrderIdFromUrl();
+    if (!orderId) {
+      swal("Lỗi", "Không tìm thấy mã đơn hàng!", "error");
+      return;
+    }
+
+  // Gọi AJAX lấy chi tiết đơn hàng từ server
+  $.get("ManageOrderDetail.php", { action: "get_order_detail", order_id: orderId }, function (res) {
+    if (res.success && res.order) {
+      enableEditing(res.order); // Bảng chuyển sang editable
+      $("#order-code").text(orderId); // Cập nhật lại order ID nếu có
+      $(".btn-save-edit, .btn-cancel-edit").show(); // Hiện nút
+      $(".edit, .btn-delete, .print-file").hide();  // Ẩn nút khác
+    } else {
+      swal("Lỗi", "Không thể tải dữ liệu đơn hàng.", "error");
+    }
+  }, "json");
+    });
+
+    // Xử lý sự kiện click nút xóa
+    $(document).on("click", ".trash", function () {
+      var orderId = getOrderIdFromUrl();
+      if (!orderId) {
+    swal("Lỗi", "Không tìm thấy mã đơn hàng!", "error");
+    return;
+  }
+  $.confirm({
+    title: "Xác nhận",
+    content: "Bạn có chắc chắn muốn xóa đơn hàng này?",
+    buttons: {
+      confirm: function () {
+        $.post(
+          "ManageOrderDetail.php",
+          {
+            action: "delete_order",
+            order_id: orderId,
+          },
+          function (response) {
+            if (response.success) {
+              swal("Thành công!", "Đơn hàng đã được xóa.", "success").then(() => {
+                window.location.href = "../MANAGE-ORDER/ManageOrder.html";
+              });
+            } else {
+              swal("Lỗi!", response.message || response.error, "error");
+            }
+          },
+          "json"
+        );
+      },
+      cancel: function () {},
+    },
+  });
+});
+
+    // Lưu thay đổi
+    $(".btn-save-edit").click(function () {
+  const order_id = $("#order-code").text().trim();
+
+  const updatedData = {
+    action: "update_order",
+    order_id: order_id,
+    full_name: $("#edit-fullname").val(),
+    phone: $("#edit-phone").val(),
+    email: $("#edit-email").val(),
+    province: $("#edit-province").val(),
+    district: $("#edit-district").val(),
+    specific_address: $("#edit-specific-address").val(),
+    payment_method: $("#edit-payment-method").val(),
+    status: $("#edit-status").val()
+  };
+
+  $.post("ManageOrderDetail.php", updatedData, function (response) {
+    if (response.success) {
+      swal("Thành công!", "Đã cập nhật đơn hàng.", "success").then(() => {
+      window.location.href = "../MANAGE-ORDER/ManageOrder.html";
+});
+    } else {
+      swal("Lỗi!", response.message || "Không thể cập nhật đơn hàng.", "error");
+    }
+  }, "json");
+});
+
+// Xử lý nút hủy bỏ sửa
+      $(".btn-cancel-edit").click(function () {
+        swal({
+          title: "Bạn có chắc muốn hủy bỏ các thay đổi?",
+          text: "Các thay đổi bạn vừa chỉnh sẽ không được lưu.",
+          icon: "warning",
+          buttons: ["Tiếp tục chỉnh sửa", "Hủy bỏ"],
+          dangerMode: true,
+        }).then((willCancel) => {
+          if (willCancel) {
+            window.location.href = "../MANAGE-ORDER/ManageOrder.html";
+          }
+        });
+      });
+
+
+    // In dữ liệu
+      myApp = {
+    printTable: function () {
+      var printContents = document.getElementById("sampleTable").outerHTML;
+      var summaryContents = document.getElementById("summary-details").outerHTML;
+      var productsContents = document.getElementById("order-products").outerHTML;
+      var orderCode = document.getElementById("order-code").innerText || "";
+      var popupWin = window.open(
+        "",
+        "_blank",
+        "width=1200,height=1200,scrollbars=yes"
+      );
+      popupWin.document.open();
+      popupWin.document.write(`
+        <html>
+          <head>
+            <title>In chi tiết đơn hàng</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.6.2/css/bootstrap.min.css">
+            <style>
+              body { padding: 32px; font-size: 16px; color: #222; background: #fff; }
+              h2 { text-align: center; margin-bottom: 8px; font-weight: 700; }
+              .order-code-print { text-align: center; font-size: 18px; color: #007bff; margin-bottom: 24px; }
+              table { margin-bottom: 24px; }
+              th, td { font-size: 16px !important; padding: 8px 12px !important; }
+              .section-title { font-weight: 700; font-size: 18px; margin: 32px 0 16px 0; }
+              #summary-details { margin-bottom: 32px; }
+              .row.align-items-center { border: 1px solid #e0e0e0; margin-bottom: 12px; background: #f9f9f9; border-radius: 10px; }
+              img.img-fluid { border: 1px solid #ccc; background: #fff; }
+              @media print {
+                body { background: #fff !important; }
+                .container { width: 100% !important; }
+                .section-title { color: #222 !important; }
+              }
+            </style>
+          </head>
+          <body onload="window.print()">
+            <div class="container">
+              <h2>CHI TIẾT ĐƠN HÀNG</h2>
+              <div class="order-code-print">Mã đơn hàng: <b>${orderCode}</b></div>
+              <div style="margin-bottom: 24px;">
+                ${printContents}
+              </div>
+              <div style="margin-bottom: 24px;">
+                ${summaryContents}
+              </div>
+              <div>
+                ${productsContents}
+              </div>
+            </div>
+          </body>
+        </html>
+      `);
+      popupWin.document.close();
+    },
+  };
+    //Xử lý sự kiện click nút in
+    $(document).on("click", ".print-file", function () {
+      myApp.printTable();
+    });
+  </script>
+</html>

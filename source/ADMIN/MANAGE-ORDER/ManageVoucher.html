@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Quản lý voucher | Quản trị Admin</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Main CSS-->
+    <link rel="stylesheet" type="text/css" href="../main.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css"
+    />
+    <!-- or -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/boxicons@latest/css/boxicons.min.css"
+    />
+
+    <!-- Font-icon css-->
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css"
+    />
+  </head>
+
+  <body onload="time()" class="app sidebar-mini rtl">
+    <!-- Navbar-->
+    <header class="app-header">
+      <!-- Sidebar toggle button--><a
+        class="app-sidebar__toggle"
+        href="#"
+        data-toggle="sidebar"
+        aria-label="Hide Sidebar"
+      ></a>
+      <!-- Navbar Right Menu-->
+      <ul class="app-nav">
+        <!-- User Menu-->
+        <li>
+          <a class="app-nav__item" href="../../LOGIN/Logout.php"
+            ><i class="bx bx-log-out bx-rotate-180"></i>
+          </a>
+        </li>
+      </ul>
+    </header>
+    <!-- Sidebar menu-->
+    <div class="app-sidebar__overlay" data-toggle="sidebar"></div>
+    <aside class="app-sidebar">
+      <div class="app-sidebar__user">
+        <div>
+          <p class="app-sidebar__user-name"><b>Quản lý LenLab</b></p>
+          <p class="app-sidebar__user-designation">Chào mừng bạn trở lại</p>
+        </div>
+      </div>
+      <hr />
+      <ul class="app-menu">
+        <li>
+          <a class="app-menu__item" href="../DASHBOARD/Trang tổng quan.html"
+            ><i class="app-menu__icon bx bx-tachometer"></i
+            ><span class="app-menu__label">Bảng điều khiển</span></a
+          >
+        </li>
+        <li>
+          <a class="app-menu__item" href="../manage product.html"
+            ><i class="app-menu__icon bx bx-purchase-tag-alt"></i
+            ><span class="app-menu__label">Quản lý sản phẩm</span></a
+          >
+        </li>
+        <li>
+          <a
+            class="app-menu__item"
+            href="../MANAGE-CUSTOMER/manage customer.html"
+            ><i class="app-menu__icon bx bx-id-card"></i>
+            <span class="app-menu__label">Quản lý khách hàng</span></a
+          >
+        </li>
+
+        <li>
+          <a class="app-menu__item haha" href="../MANAGE-ORDER/ManageOrder.html"
+            ><i class="app-menu__icon bx bx-task"></i
+            ><span class="app-menu__label">Quản lý đơn hàng</span></a
+          >
+        </li>
+      </ul>
+    </aside>
+
+    <!--Giao diện làm việc-->
+    <main class="app-content">
+      <!-- Thanh danh sách đơn hàng-->
+      <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+          <li class="breadcrumb-item active">
+            <a href="../MANAGE-ORDER/ManageOrder.html"
+              ><b>Danh sách đơn hàng</b></a
+            >
+          </li>
+        </ul>
+        <div id="clock"></div>
+      </div>
+      <!-- Thanh quản lý voucher-->
+      <div class="app-title">
+        <ul class="app-breadcrumb breadcrumb side">
+          <li class="breadcrumb-item active">
+            <a href=""><b>Quản lý voucher</b></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div class="tile">
+            <div class="tile-body">
+              <div class="row element-button">
+                <div class="col-sm-2">
+                  <a
+                    class="btn btn-add btn-sm"
+                    href="AddVoucher.html"
+                    title="Thêm"
+                    ><i class="fas fa-plus"></i> Tạo mới voucher</a
+                  >
+                </div>
+
+                <div class="col-sm-2">
+                  <a
+                    class="btn btn-delete btn-sm"
+                    type="button"
+                    title="Xóa"
+                    onclick="myFunction(this)"
+                    ><i class="fas fa-trash-alt"></i> Xóa voucher
+                  </a>
+                </div>
+              </div>
+              <table class="table table-hover table-bordered" id="orderTable">
+                <thead>
+                  <tr>
+                    <th width="10"><input type="checkbox" id="all" /></th>
+                    <th>ID voucher</th>
+                    <th>Mã code</th>
+                    <th>Kiểu giảm</th>
+                    <th>Gía trị giảm</th>
+                    <th>Điều kiện đơn hàng tối thiểu</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Ngày kết thúc</th>
+                    <th>Tình trạng</th>
+                  </tr>
+                </thead>
+                <tbody id="orderTableBody">
+                  <!-- Dữ liệu sẽ được load ở đây -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- jQuery và Bootstrap JS -->
+    <!-- Thêm jQuery CDN trước tất cả các script khác -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap4.min.js"></script>
+    <!-- jQuery Confirm -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js"></script>
+    <script type="text/javascript">
+      $("#orderTable").DataTable();
+    </script>
+
+    <!-- script chính xử lý các thao tác -->
+    <script>
+      //Thời Gian
+      function time() {
+        var today = new Date();
+        var weekday = new Array(7);
+        weekday[0] = "Chủ Nhật";
+        weekday[1] = "Thứ Hai";
+        weekday[2] = "Thứ Ba";
+        weekday[3] = "Thứ Tư";
+        weekday[4] = "Thứ Năm";
+        weekday[5] = "Thứ Sáu";
+        weekday[6] = "Thứ Bảy";
+        var day = weekday[today.getDay()];
+        var dd = today.getDate();
+        var mm = today.getMonth() + 1;
+        var yyyy = today.getFullYear();
+        var h = today.getHours();
+        var m = today.getMinutes();
+        var s = today.getSeconds();
+        m = checkTime(m);
+        s = checkTime(s);
+        nowTime = h + " giờ " + m + " phút " + s + " giây";
+        if (dd < 10) {
+          dd = "0" + dd;
+        }
+        if (mm < 10) {
+          mm = "0" + mm;
+        }
+        today = day + ", " + dd + "/" + mm + "/" + yyyy;
+        tmp = '<span class="date"> ' + today + " - " + nowTime + "</span>";
+        document.getElementById("clock").innerHTML = tmp;
+        clocktime = setTimeout("time()", "1000", "Javascript");
+
+        function checkTime(i) {
+          if (i < 10) {
+            i = "0" + i;
+          }
+          return i;
+        }
+      }
+    </script>
+  </body>
+  <script>
+    // Lấy danh sách voucher
+    $(document).ready(function () {
+      function loadVouchers() {
+        $.get(
+          "ManageVoucher.php",
+          { action: "get_vouchers" },
+          function (response) {
+            if (response.success) {
+              let html = "";
+              response.data.forEach(function (voucher) {
+                html += `
+              <tr>
+                <td width="10"><input type="checkbox" name="check1" value="${
+                  voucher.id
+                }" /></td>
+                <td>${voucher.id}</td>
+                <td>${voucher.code}</td>
+                <td>${voucher.type === "fixed" ? "Giảm tiền" : "Giảm %"}</td>
+                <td>${
+                  voucher.type === "fixed"
+                    ? voucher.discount_value + " đ"
+                    : voucher.discount_value + " %"
+                }</td>
+                <td>${
+                  voucher.min_order_value ? voucher.min_order_value + " đ" : "-"
+                }</td>
+                <td>${voucher.start_date || "-"}</td>
+                <td>${voucher.end_date || "-"}</td>
+                <td>
+                  <span class="badge ${
+                    voucher.active ? "bg-success" : "bg-secondary"
+                  }">
+                    ${voucher.active ? "Đang hoạt động" : "Ngừng"}
+                  </span>
+                </td>
+              </tr>
+            `;
+              });
+              $("#orderTableBody").html(html);
+            } else {
+              $("#orderTableBody").html(
+                '<tr><td colspan="10">Không có dữ liệu</td></tr>'
+              );
+            }
+          },
+          "json"
+        ).fail(function () {
+          $("#orderTableBody").html(
+            '<tr><td colspan="10">Lỗi khi tải dữ liệu</td></tr>'
+          );
+        });
+      }
+      loadVouchers();
+
+      // Xử lý sự kiện click nút xóa
+      $(document).on("click", ".trash", function () {
+        var voucherId = $(this)
+          .closest("tr")
+          .find("input[type='checkbox']")
+          .val();
+        $.confirm({
+          title: "Xác nhận",
+          content: "Bạn có chắc chắn muốn xóa voucher này?",
+          buttons: {
+            confirm: function () {
+              $.post(
+                "ManageVoucher.php",
+                { action: "delete_voucher", id: voucherId },
+                function (response) {
+                  if (response.success) {
+                    swal("Thành công!", "Voucher đã được xóa.", "success");
+                    loadVouchers();
+                  } else {
+                    swal("Lỗi!", response.message, "error");
+                  }
+                },
+                "json"
+              );
+            },
+            cancel: function () {},
+          },
+        });
+      });
+
+      // Xử lý sự kiện click nút sửa
+      $(document).on("click", ".edit", function () {
+        var voucherId = $(this)
+          .closest("tr")
+          .find("input[type='checkbox']")
+          .val();
+        window.location.href = `EditVoucher.html?id=${voucherId}`;
+      });
+
+      // Xử lý sự kiện click nút xóa tất cả
+      $(document).on("click", ".btn-delete", function () {
+        var selectedVouchers = [];
+        $("input[name='check1']:checked").each(function () {
+          selectedVouchers.push($(this).val());
+        });
+
+        if (selectedVouchers.length === 0) {
+          swal(
+            "Thông báo",
+            "Vui lòng chọn ít nhất một voucher để xóa.",
+            "warning"
+          );
+          return;
+        }
+
+        $.confirm({
+          title: "Xác nhận",
+          content: "Bạn có chắc chắn muốn xóa các voucher đã chọn?",
+          buttons: {
+            confirm: function () {
+              $.post(
+                "ManageVoucher.php",
+                { action: "delete_vouchers", ids: selectedVouchers },
+                function (response) {
+                  if (response.success) {
+                    swal("Thành công!", "Các voucher đã được xóa.", "success");
+                    loadVouchers();
+                  } else {
+                    swal("Lỗi!", response.message, "error");
+                  }
+                },
+                "json"
+              );
+            },
+            cancel: function () {},
+          },
+        });
+      });
+
+      // Xử lý sự kiện click nút chọn tất cả
+      $("#all").click(function () {
+        $("input[name='check1']").prop("checked", this.checked);
+      });
+    });
+  </script>
+</html>
