@@ -13,7 +13,7 @@
 - **Tên môn học**: Phát triển ứng dụng web
 - **Mã môn học**: IS207
 - **Mã lớp**: IS207.P22
-- **Năm học**: HK1 (2024 - 2025)
+- **Năm học**: HK2 (2024 - 2025)
 - **Giảng viên**: ThS. Mai Xuân Hùng
 
 ---
